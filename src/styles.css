@@ -1,0 +1,87 @@
+@import '@fontsource/fira-mono';
+
+:root {
+	--border-radius: 10px;
+
+	--font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	--font-mono: 'Fira Mono', monospace;
+
+	--color-sheme: var(--tg-color-sheme);
+
+	--viewport-height: var(--tg-viewport-height);
+	--viewport-stable-height: var(--tg-viewport-stable-height);
+
+	--text-main-color: var(--tg-theme-text-color);
+	--text-link-color: var(--tg-theme-link-color);
+	--text-secondary-color: var(--tg-theme-hint-color);
+	--text-accent-color: var(--tg-theme-accent-text-color);
+	--text-destructive-color: var(--tg-theme-destructive-text-color);
+
+	--button-main-color: var(--tg-theme-button-color);
+	--button-text-color: var(--tg-theme-button-text-color);
+
+	--bg-main-color: var(--tg-theme-bg-color);
+	--bg-secondary-color: var(--tg-theme-secondary-bg-color);
+
+	--section-bg-color: var(--tg-theme-section-bg-color);
+	--subtitle-color: var(--tg-theme-subtitle-text-color);
+	--section-header-color: var(--tg-theme-section-header-text-color);
+
+	--header-height: 44px;
+	--header-bg-color: var(--tg-theme-header-bg-color);
+	--header-color: var(--tg-theme-section-header-text-color);
+
+	color: var(--text-main-color);
+	font-family: var(--font-body);
+}
+
+body {
+	margin: 0;
+
+	background-color: var(--bg-secondary-color);
+}
+
+h1,
+h2,
+p {
+	font-weight: 400;
+}
+
+p {
+	line-height: 1.5;
+}
+
+a {
+	color: var(--color-theme-1);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1 {
+	font-size: 2rem;
+	text-align: center;
+}
+
+h2 {
+	font-size: 1rem;
+}
+
+input,
+button {
+	font-size: inherit;
+	font-family: inherit;
+}
+
+button:focus:not(:focus-visible) {
+	outline: none;
+}
+
+@media (min-width: 720px) {
+	h1 {
+		font-size: 2.4rem;
+	}
+}
