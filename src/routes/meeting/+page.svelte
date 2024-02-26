@@ -15,9 +15,9 @@
     import { UserAvatarsList, users } from '@/features/user';
 	import { allMeetings, markMeetingFinishedFx, meetingNotHappendFx } from "@/features/meeting";
 
-    let eventId = $page.params.eventId;
-    let meetingId = $page.params.meetingId;
     let userId = $page.url.searchParams.get('userId')!;
+    let eventId = $page.url.searchParams.get('eventId')!;
+    let meetingId = $page.url.searchParams.get('meetingId')!;
 
     $: meeting = $allMeetings.find(meet => String(meet.id) === meetingId);
     $: meetUsers = $users.filter(user => meeting?.userIds?.includes(user.meta.id));
@@ -25,7 +25,7 @@
     const tg = getTelegram();
 
     function goToCard() {
-        goFromMain(`meeting/${meeting!.id}/card/`);
+        goFromMain(`/card/`, { meetingId: meeting!.id! });
     }
 
     function goToChat() {
@@ -36,12 +36,12 @@
         {
             icon: AcceptIcon,
             text: 'Встреча закончилась',
-            onClick: () => markMeetingFinishedFx({ eventId, userId, meetingId }).then(goToMain),
+            onClick: () => markMeetingFinishedFx({ eventId, userId, meetingId }).then(() => goToMain()),
         },
         {
             icon: RejectIcon,
             text: 'Встреча не состоялась',
-            onClick: () => meetingNotHappendFx({ eventId, userId, meetingId }).then(goToMain),
+            onClick: () => meetingNotHappendFx({ eventId, userId, meetingId }).then(() => goToMain()),
         }
     ];
 </script>

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from '$app/stores';
-    import { goto } from '$app/navigation';
 
+	import { goFromMain } from '@/shared/lib';
 	import Button from '@/shared/components/Button.svelte';
 
     import { starSearchFastMeeting } from '@/entities/user';
@@ -15,13 +15,11 @@
 
     function handleFastMeet() {
         searchStarted = true;
-        starSearchFastMeeting($page.params.eventId, $page.url.searchParams.get('userId')!);
+        starSearchFastMeeting($page.url.searchParams.get('eventId')!, $page.url.searchParams.get('userId')!);
     }
 
     function handleCustomMeet() {
-        const newUrl = new URL($page.url);
-        newUrl.pathname += 'meeting/create';
-        goto(newUrl);
+        goFromMain('custom-meet');
     }
 </script>
 

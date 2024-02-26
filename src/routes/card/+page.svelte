@@ -2,23 +2,13 @@
     import { page } from "$app/stores";
 
     import Text from "@/shared/components/Text.svelte";
-    import Menu from '@/shared/components/Menu.svelte';
-	import Field from "@/shared/components/Field.svelte";
-    import Button from '@/shared/components/Button.svelte';
-	import Section from "@/shared/components/Section.svelte";
-    import AcceptIcon from '@/shared/components/AcceptIcon.svelte';
-    import RejectIcon from "@/shared/components/RejectIcon.svelte";
-	import { goFromMain, goToMain, getTelegram } from "@/shared/lib";
-    import type { MenuItemType } from '@/shared/components/Menu.svelte';
-
-	import { allMeetings, markMeetingFinishedFx, meetingNotHappendFx } from "@/features/meeting";
 	import Stack from "@/shared/components/Stack.svelte";
 
-    let meetingId = $page.params.meetingId;
+	import { allMeetings } from "@/features/meeting";
+
+    let meetingId = $page.url.searchParams.get('meetingId');
 
     $: meeting = $allMeetings.find(meet => String(meet.id) === meetingId)!;
-
-    $: console.log(meetingId, meeting);
 
     let wrapper: HTMLElement;
 </script>

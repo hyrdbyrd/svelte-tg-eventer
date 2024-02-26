@@ -1,3 +1,4 @@
+import { base } from '$app/paths';
 import { redirect } from '@sveltejs/kit';
 
 export function load({ url }) {
@@ -9,21 +10,20 @@ export function load({ url }) {
 	if (!searchParams.eventId) redirect(308, '404');
 
 	const nextUrl = new URL(url);
-	nextUrl.pathname += `event/${searchParams.eventId}`;
 
 	switch (searchParams.type) {
 		case 'rating':
-			nextUrl.pathname += 'history';
+			nextUrl.pathname = base + '/history';
 			break;
 
 		case 'fastmeeting':
 			if (!searchParams.meetingId) break;
-			nextUrl.pathname += `meeting/${searchParams.meetingId}`;
+			nextUrl.pathname = base + '/meeting';
 			break;
 
 		case 'request':
 		default:
-			break;
+			return;
 	}
 
 	return redirect(300, nextUrl);

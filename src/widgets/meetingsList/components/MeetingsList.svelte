@@ -10,7 +10,7 @@
     export let meetings: Meeting[];
 
     function handleMeeting(id: Nil<number>) {
-        goFromMain(`meeting/${id!}`);
+        goFromMain('/meeting', { meetingId: id! });
     }
 </script>
 

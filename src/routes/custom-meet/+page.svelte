@@ -9,6 +9,7 @@
 	import Button from '@/shared/components/Button.svelte';
     import { createCustomMeetingFx } from '@/features/meeting';
 	import Tumbler from '@/shared/components/Tumbler.svelte';
+	import { goFromMain } from '@/shared/lib';
 
     let name = '';
     let capacity = '';
@@ -27,11 +28,11 @@
             description,
             status: 'ACCEPTED',
             type: 'CUSTOM_MEETING',
-            eventId: Number($page.params.eventId),
+            eventId: Number($page.url.searchParams.get('eventId')!),
             capacity: capacity ? Number(capacity) : undefined,
             organizatorId: Number($page.url.searchParams.get('userId')!),
         })
-            .then(() => history.back())
+            .then((data) => goFromMain('/meeting', { meetingId: data.id! }))
             .finally(() => isLoading = false);
     }
 </script>

@@ -1,15 +1,17 @@
+import { base } from '$app/paths';
 import { goto } from '$app/navigation';
 
-export function goFromMain(url: string = '') {
+export function goFromMain(url: string = '', params: Record<string, string | number> = {}) {
 	const nextUrl = new URL(location.href);
-	nextUrl.pathname = nextUrl.pathname.replace(
-		/(\/event\/\d+)(\/.*)?$/,
-		`$1/${url.startsWith('/') ? url.slice(1) : url}`,
-	);
+	nextUrl.pathname = base + (url.startsWith('/') ? url : `/${url}`);
+
+	for (const [key, value] of Object.entries(params)) {
+		nextUrl.searchParams.set(key, String(value));
+	}
 
 	return goto(nextUrl);
 }
 
-export function goToMain() {
-	return goFromMain();
+export function goToMain(params: Record<string, string | number> = {}) {
+	return goFromMain('', params);
 }

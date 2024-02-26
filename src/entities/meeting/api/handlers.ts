@@ -26,10 +26,13 @@ export function getAvailableCustomMeetings(eventId: string) {
 }
 
 export function createCustomMeeting(meeting: MeetingMeta) {
-	return api.post<ApiMeeting>(
-		`/meeting/create_custom_meeting/${meeting.eventId}`,
-		mapClientMeetingTo(meeting),
-	);
+	return api
+		.post<ApiMeeting>(
+			`/meeting/create_custom_meeting/${meeting.eventId}`,
+			mapClientMeetingTo(meeting),
+		)
+		.then((respond) => respond.data)
+		.then((meet) => mapApiMeetingToClient(meet, 'MY'));
 }
 
 export function markMeetingFinished(eventId: string, userId: string, meetingId: string) {
