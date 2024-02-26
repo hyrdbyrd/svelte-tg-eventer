@@ -1,0 +1,1 @@
+export const env={"PUBLIC_API":"https://backend.hibye.pro:8443","PUBLIC_STATIC_DOMAIN":"cool-faithful-kangaroo.ngrok-free.app"}
