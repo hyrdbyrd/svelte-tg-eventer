@@ -1,40 +1,42 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { attachLogger } from 'effector-logger';
 
-	import { page } from '$app/stores';
+	import { dev } from '$app/environment';
+
+	import { getTelegram } from '@/shared/lib';
 
 	import '@/styles.css';
 
-	import Header from '@/layouts/Header.svelte';
+	let mounted = false;
 
-	attachLogger();
+	onMount(() => {
+		getTelegram().ready();
+		mounted = true;
+	});
+
+	if (dev) attachLogger();
 </script>
-
-<Header title={$page.data.meta.title} />
 
 <div class="app">
 	<main>
-		<slot />
+		{#if mounted}
+			<slot />
+		{/if}
 	</main>
 </div>
 
 <style>
 	.app {
-		margin: var(--header-height) 0 0;
-
 		display: flex;
+		padding-bottom: 50px;
 		flex-direction: column;
-		min-height: calc(100vh - var(--header-height) - 10px);
+		box-sizing: border-box;
+		min-height: calc(100vh);
 	}
 
 	main {
 		flex: 1;
 		width: 100%;
-		/* display: flex;
-		padding: 1rem;
-		margin: 0 auto;
-		max-width: 64rem;
-		flex-direction: column;
-		box-sizing: border-box; */
 	}
 </style>

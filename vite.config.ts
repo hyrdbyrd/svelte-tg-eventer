@@ -1,8 +1,6 @@
-import { join } from 'node:path';
-import { readFileSync } from 'node:fs';
-
 import { config } from 'dotenv';
 import { defineConfig } from 'vite';
+import { ngrok } from 'vite-plugin-ngrok';
 import { sveltekit } from '@sveltejs/kit/vite';
 
 config();
@@ -13,18 +11,28 @@ function getPort(): number {
 	return port;
 }
 
-export default defineConfig({
-	plugins: [sveltekit()],
-	server: {
-		host: true,
-		cors: false,
-		port: getPort(),
-		strictPort: true,
-		https: {
-			// requestCert: true,
-			// rejectUnauthorized: true,
-			key: readFileSync(join(__dirname, './cert/cert.key')),
-			cert: readFileSync(join(__dirname, './cert/cert.crt'))
-		}
+export default defineConfig(({ command }) => {
+	if (command === 'build') {
+		return {
+			plugins: [sveltekit()]
+		};
 	}
+
+	return {
+		plugins: [
+			sveltekit(),
+			ngrok({
+				port: getPort(),
+				host: `https://localhost:${getPort()}`,
+				authtoken: process.env.NGROK_AUTHTOKEN,
+				domain: process.env.PUBLIC_STATIC_DOMAIN
+			})
+		],
+		server: {
+			host: true,
+			// TODO: logic (creds, origin, PUBLIC_API)
+			cors: false,
+			port: getPort()
+		}
+	};
 });

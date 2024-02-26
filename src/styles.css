@@ -17,16 +17,22 @@
 	--text-secondary-color: var(--tg-theme-hint-color);
 	--text-accent-color: var(--tg-theme-accent-text-color);
 	--text-destructive-color: var(--tg-theme-destructive-text-color);
+	--text-subtitle-color: var(--tg-theme-subtitle-text-color);
 
 	--button-main-color: var(--tg-theme-button-color);
+	--button-disabled-color: var(--tg-theme-hint-color);
 	--button-text-color: var(--tg-theme-button-text-color);
+
+	--button-red-color: rgba(227, 85, 69, 1);
+	--button-green-color: rgba(39, 180, 78, 1);
 
 	--bg-main-color: var(--tg-theme-bg-color);
 	--bg-secondary-color: var(--tg-theme-secondary-bg-color);
 
 	--section-bg-color: var(--tg-theme-section-bg-color);
-	--subtitle-color: var(--tg-theme-subtitle-text-color);
 	--section-header-color: var(--tg-theme-section-header-text-color);
+
+	--footer-height: 52px;
 
 	--header-height: 44px;
 	--header-bg-color: var(--tg-theme-header-bg-color);
@@ -38,7 +44,7 @@
 
 body {
 	margin: 0;
-
+	user-select: none;
 	background-color: var(--bg-secondary-color);
 }
 
