@@ -1,0 +1,1 @@
+import{g as r}from"./entry.D8NMrKOt.js";function s(t="",n={}){const o=new URL(location.href);o.pathname=t.startsWith("/")?t:`/${t}`;for(const[a,e]of Object.entries(n))o.searchParams.set(a,String(e));return r(o)}function c(t={}){return s("",t)}export{c as a,s as g};
