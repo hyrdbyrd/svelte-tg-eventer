@@ -7,7 +7,6 @@ export function goFromMain(url: string = '') {
 		`$1/${url.startsWith('/') ? url.slice(1) : url}`,
 	);
 
-	console.log(url, nextUrl.pathname);
 	return goto(nextUrl);
 }
 
