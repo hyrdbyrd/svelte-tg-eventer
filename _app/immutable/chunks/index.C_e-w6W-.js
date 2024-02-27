@@ -1,1 +1,0 @@
-import{b as r,g as s}from"./entry.DSiRGVQ1.js";function i(t="",a={}){const o=new URL(location.href);o.pathname=r+(t.startsWith("/")?t:`/${t}`);for(const[n,e]of Object.entries(a))o.searchParams.set(n,String(e));return s(o)}function f(t={}){return i("",t)}export{f as a,i as g};
