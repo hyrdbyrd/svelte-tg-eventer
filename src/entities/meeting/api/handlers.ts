@@ -18,9 +18,9 @@ export function getEndedUserMeetings(eventId: string, userId: string) {
 		.then((meetings) => meetings.map((meet) => mapApiMeetingToClient(meet, 'ENDED')));
 }
 
-export function getAvailableCustomMeetings(eventId: string) {
+export function getAvailableCustomMeetings(eventId: string, userId: string) {
 	return api
-		.get<ApiMeeting[]>(`/meeting/get_available_custom_meetings/${eventId}`)
+		.get<ApiMeeting[]>(`/meeting/get_available_custom_meetings/${eventId}/${userId}`)
 		.then((respond) => respond.data)
 		.then((meetings) => meetings.map((meet) => mapApiMeetingToClient(meet, 'AVAILABLE')));
 }
@@ -33,6 +33,36 @@ export function createCustomMeeting(meeting: MeetingMeta) {
 		)
 		.then((respond) => respond.data)
 		.then((meet) => mapApiMeetingToClient(meet, 'MY'));
+}
+
+export function markMeeting(
+	eventId: string,
+	userId: string,
+	meetingId: string,
+	mark: number,
+	meetingNote: string,
+) {
+	return api
+		.post<{
+			mark: number;
+			meetingId: number;
+			meetingNote: string;
+		}>(`/meeting/mark/${eventId}`, {
+			mark,
+			userId,
+			eventId,
+			meetingId,
+			meetingNote,
+		})
+		.then((resp) => resp.data);
+}
+
+export function joinMeeting(eventId: string, userId: string, meetingId: string) {
+	return api.post<unknown>(`/meeting/join_meeting/${eventId}/${userId}`, {
+		userId,
+		eventId,
+		meetingId,
+	});
 }
 
 export function markMeetingFinished(eventId: string, userId: string, meetingId: string) {
@@ -49,4 +79,14 @@ export function meetingNotHappend(eventId: string, userId: string, meetingId: st
 		userId,
 		meetingId,
 	});
+}
+
+export function leftMeeting(eventId: string, userId: string, meetingId: string) {
+	return api
+		.post<{ meetingId: number }>(`/meeting/left_meeting/${eventId}/${userId}`, {
+			userId,
+			eventId,
+			meetingId,
+		})
+		.then((resp) => resp.data);
 }

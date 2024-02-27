@@ -1,13 +1,5 @@
 # Telegram eventer
 
-## Cert generator guide
-
-https://dev.to/devland/how-to-generate-and-use-an-ssl-certificate-in-nodejs-2996
-
-```sh
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./cert/cert.key -out ./cert/cert.crt
-```
-
 ## Serves
 
 UserId: 3

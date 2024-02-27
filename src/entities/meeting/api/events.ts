@@ -28,3 +28,5 @@ export const fastMeetingUserFound$ = fromEventSource<ApiMeeting>(
 	apiEventSource,
 	'FAST_MEETING_USER_FOUND',
 ).pipe(map((meet) => mapApiMeetingToClient(meet, 'MY')));
+
+export const meetingUpdated$ = fromEventSource<ApiMeeting>(apiEventSource, 'MEETING_UPDATED');

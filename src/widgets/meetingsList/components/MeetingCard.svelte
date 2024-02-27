@@ -17,6 +17,7 @@
         name,
         rate,
         capacity,
+        queueType,
         userIds = [],
     } = meeting;
 
@@ -35,10 +36,16 @@
 	<Stack wide gap="4" justify="between" align="start">
 		<Text role="main">{name}</Text>
 	</Stack>
-	<Stack wide gap="4" justify="between" align="center">
+	<Stack wide gap="4" justify="between" align="end">
         <Capacity users={usersInMeeting} maxCount={capacity} />
-		{#if typeof rate === 'number'}
-			<Rating {rate} />
-		{/if}
+        {#if queueType === 'ENDED'}
+            {#if typeof rate === 'number'}
+                <Rating {rate} />
+            {:else if meeting.status === 'REJECTED'}
+                <Text role="destructive">Запрос отклонен</Text>
+            {:else}
+                <Text role="accent">Оцените встречу</Text>
+            {/if}
+        {/if}
 	</Stack>
 </Stack>

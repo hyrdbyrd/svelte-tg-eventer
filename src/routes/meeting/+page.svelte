@@ -1,26 +1,69 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 
-    import Text from "@/shared/components/Text.svelte";
     import Menu from '@/shared/components/Menu.svelte';
-	import Field from "@/shared/components/Field.svelte";
     import Button from '@/shared/components/Button.svelte';
 	import Section from "@/shared/components/Section.svelte";
+    import Textarea from '@/shared/components/Textarea.svelte';
+    import UsersIcon from '@/shared/components/UsersIcon.svelte';
     import AcceptIcon from '@/shared/components/AcceptIcon.svelte';
     import RejectIcon from "@/shared/components/RejectIcon.svelte";
-	import { goFromMain, goToMain, getTelegram } from "@/shared/lib";
-    import type { MenuItemType } from '@/shared/components/Menu.svelte';
+	import FieldSection from "@/shared/components/FieldSection.svelte";
+	import { goFromMain, goToMain, getTelegram, compact } from "@/shared/lib";
 
     import { Footer } from '@/features/footer';
     import { UserAvatarsList, users } from '@/features/user';
-	import { allMeetings, markMeetingFinishedFx, meetingNotHappendFx } from "@/features/meeting";
+	import {
+        allMeetings,
+        RateMeeeting,
+        joinMeetingFx,
+        markMeetingFx,
+        leftMeetingFx,
+        meetingNotHappendFx,
+        markMeetingFinishedFx,
+    } from "@/features/meeting";
+	import ExitIcon from "@/shared/components/ExitIcon.svelte";
 
     let userId = $page.url.searchParams.get('userId')!;
     let eventId = $page.url.searchParams.get('eventId')!;
     let meetingId = $page.url.searchParams.get('meetingId')!;
 
-    $: meeting = $allMeetings.find(meet => String(meet.id) === meetingId);
+    let isLoading = false;
+
+    let meeting = $allMeetings.find(meet => String(meet.id) === meetingId);
     $: meetUsers = $users.filter(user => meeting?.userIds?.includes(user.meta.id));
+
+    let rate = meeting?.rate || 0;
+    $: rateText = meeting?.meetingNote || '';
+
+    $: isEnded = meeting?.queueType === 'ENDED';
+    $: isFast = meeting?.type === 'FAST_MEETING';
+    $: isRejected = meeting?.status === 'REJECTED';
+    $: isAccepted = meeting?.status === 'ACCEPTED';
+    $: isAvailable = meeting?.queueType === 'AVAILABLE';
+
+    $: menuItmes = compact([
+        isFast && !isEnded && {
+            icon: AcceptIcon,
+            text: 'Встреча закончилась',
+            onClick: () => markMeetingFinishedFx({ eventId, userId, meetingId }).then(() => goToMain()),
+        },
+        isFast && !isEnded && {
+            icon: RejectIcon,
+            text: 'Встреча не состоялась',
+            onClick: () => meetingNotHappendFx({ eventId, userId, meetingId }).then(() => goToMain()),
+        },
+        !isFast && {
+            icon: UsersIcon,
+            text: 'Участники',
+            onClick: () => goFromMain('/meet-users', { meetingId }),
+        },
+        !isEnded && !isFast && isAccepted && {
+            icon: ExitIcon,
+            text: 'Покинуть встречу',
+            onClick: () => leftMeetingFx({ eventId, userId, meetingId }).then(() => goFromMain('/', { meetingId })),
+        }
+    ]);
 
     const tg = getTelegram();
 
@@ -28,52 +71,82 @@
         goFromMain(`/card/`, { meetingId: meeting!.id! });
     }
 
+    // TODO: logic
     function goToChat() {
         tg.sendData(JSON.stringify(meetingId));
     }
 
-    let actions: MenuItemType[] = [
-        {
-            icon: AcceptIcon,
-            text: 'Встреча закончилась',
-            onClick: () => markMeetingFinishedFx({ eventId, userId, meetingId }).then(() => goToMain()),
-        },
-        {
-            icon: RejectIcon,
-            text: 'Встреча не состоялась',
-            onClick: () => meetingNotHappendFx({ eventId, userId, meetingId }).then(() => goToMain()),
-        }
-    ];
+    function markMeet() {
+        isLoading = true;
+        markMeetingFx({ eventId, meetingId, userId, mark: rate, meetingNote: rateText })
+            .then(() => goFromMain('/'))
+            .finally(() => isLoading = false);
+    }
+
+    function joinMeeting() {
+        isLoading = true;
+        joinMeetingFx({ eventId, userId, meetingId })
+            .then(() => goToMain())
+            .finally(() => isLoading = false);
+    }
+
+    $: console.log(meeting);
 </script>
 
 <!-- TODO: i18n -->
 {#if meeting}
-    {#if meeting.type === 'FAST_MEETING'}
-        <UserAvatarsList users={meetUsers} />
-        <Section type="inner">
-            <Field>
-                <Text slot="name">{meeting.name || meetUsers.map(user => user.meta.userName).join(' ')}</Text>
-                <Text slot="content" role="secondary">Имя</Text>
-            </Field>
-        </Section>
-        {#if meeting.description}
-            <Section type="inner">
-                <Field>
-                    <Text slot="name">{meeting.description}</Text>
-                    <Text slot="content" role="secondary">Описание</Text>
-                </Field>
-            </Section>
-        {/if}
-        <Section title="Подробности" type="main">
-            <Menu items={actions} />
-        </Section>
-        <Footer>
-            <Button wide on:click={goToChat}>
-                Чат
-            </Button>
-            <Button on:click={goToCard} wide>
-                Карточка
-            </Button>
-        </Footer>
+    <UserAvatarsList users={meetUsers} />
+    <FieldSection value={meeting.name || meetUsers.map(user => user.meta.userName).join(' ')} description="Имя" />
+    {#if meeting.description}
+        <FieldSection value={meeting.description} description="Описание" />
     {/if}
+    {#if meeting.capacity}
+        <FieldSection value={`${meetUsers.length} из ${meeting.capacity}`} description="Количество участников" />
+    {/if}
+
+    {#if isEnded && !isRejected}
+        <Section type="main" title="Оценка">
+            <Section type="inner">
+                <RateMeeeting bind:currentRate={rate} />
+            </Section>
+            <Section type="inner">
+                <Textarea
+                    bind:value={rateText}
+                    name="Впечатления от встречи"
+                    placeholder="Расскажите, как прошла встреча"
+                />
+            </Section>
+        </Section>
+    {/if}
+
+    {#if menuItmes?.length}
+        <Section title="Подробности" type="main">
+            <Menu items={menuItmes} />
+        </Section>
+    {/if}
+
+        {#if isEnded && !isRejected}
+            <Footer>
+                <Button
+                    wide
+                    on:click={markMeet}
+                    disabled={!rate || isLoading}
+                >
+                    Сохранить
+                </Button>
+            </Footer>
+        {:else if isAvailable}
+            <Footer>
+                <Button wide on:click={joinMeeting}>Вступить</Button>
+            </Footer>
+        {:else if !isRejected}
+            <Footer>
+                <Button wide on:click={goToChat}>
+                    Чат
+                </Button>
+                <Button on:click={goToCard} wide>
+                    Карточка
+                </Button>
+            </Footer>
+        {/if}
 {/if}

@@ -13,6 +13,7 @@ export interface MeetingMeta {
 	capacity?: Nil<number>;
 	userIds?: Nil<number[]>;
 	timeStart?: Nil<string>;
+	meetingNote?: Nil<string>;
 	description?: Nil<string>;
 }
 

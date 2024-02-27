@@ -28,6 +28,10 @@
 		color: var(--text-secondary-color);
 	}
 
+	.destructive {
+		color: var(--text-destructive-color);
+	}
+
 	.accent {
 		color: var(--text-accent-color);
 	}

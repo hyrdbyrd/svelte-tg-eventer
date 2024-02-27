@@ -27,10 +27,10 @@ export function mapApiUserToClient(user: ApiUser | ApiUserMeta): User {
 		eventId: user.eventId,
 		meta: {
 			id: user.userId,
-			userName: user.userName,
 			description: user.userInfo,
-			photoLink: user.photoLink || undefined
-		}
+			photoLink: user.photoLink || undefined,
+			userName: user.userName || telegram.userName,
+		},
 	};
 }
 

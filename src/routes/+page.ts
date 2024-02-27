@@ -7,7 +7,7 @@ export function load({ url }) {
 		{},
 	);
 
-	if (!searchParams.eventId) redirect(308, '404');
+	if (!searchParams.eventId || !searchParams.userId) redirect(308, '404');
 
 	const nextUrl = new URL(url);
 

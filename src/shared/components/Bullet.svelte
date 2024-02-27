@@ -28,6 +28,7 @@
     }
 
     svelte-bullet-body {
+        font-size: 10px;
         position: absolute;
     }
 </style>

@@ -16,6 +16,7 @@ export function mapClientMeetingTo(meeting: MeetingMeta): ApiMeeting {
 		timeStart: meeting.timeStart,
 		meetingStatus: meeting.status,
 		description: meeting.description,
+		meetingNote: meeting.meetingNote,
 		organisatorId: meeting.organizatorId,
 	};
 }
@@ -34,6 +35,7 @@ export function mapApiMeetingToClient(meeting: ApiMeeting, queueType: MeetingQue
 		timeStart: meeting.timeStart,
 		status: meeting.meetingStatus,
 		description: meeting.description,
+		meetingNote: meeting.meetingNote,
 		organizatorId: meeting.organisatorId,
 	};
 }

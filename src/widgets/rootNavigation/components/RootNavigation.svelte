@@ -11,7 +11,12 @@
     let menu: MenuItemType[] = [
         { icon: ProfileIcon, text: 'Анкета', onClick: goFromMain.bind(null, 'profile') },
         { icon: ClockIcon, text: 'Участники', onClick: goFromMain.bind(null, 'users') },
-        { icon: ClockIcon, text: 'История', onClick: goFromMain.bind(null, 'history'), pin: $endedMeetings.filter(meeting => meeting.rate).length },
+        {
+            icon: ClockIcon,
+            text: 'История',
+            onClick: goFromMain.bind(null, 'history'),
+            pin: $endedMeetings.filter(meeting => !meeting.rate).length
+        },
     ];
 </script>
 

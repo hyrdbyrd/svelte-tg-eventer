@@ -26,35 +26,12 @@ export declare namespace TelegramWebApps {
 		 * You should only use data from initData on the bot's server and only after it has been validated.
 		 */
 		initDataUnsafe: WebAppInitData;
-		/**
-		 * The color scheme currently used in the Telegram app. Either “light” or “dark”.
-		 * Also available as the CSS variable var(--tg-color-scheme).
-		 */
 		colorScheme: 'light' | 'dark';
-		/**
-		 * An object containing the current theme settings used in the Telegram app.
-		 */
 		themeParams: ThemeParams;
-		/**
-		 * True if the Web App is expanded to the maximum available height.
-		 * False, if the Web App occupies part of the screen and can be expanded to the full height using the expand() method.
-		 */
 		isExpanded: boolean;
-		/**
-		 * The current height of the visible area of the Web App. Also available in CSS as the variable var(--tg-viewport-height).
-		 */
 		viewportHeight: number;
-		/**
-		 * The height of the visible area of the Web App in its last stable state. Also available in CSS as a variable var(--tg-viewport-stable-height).
-		 */
 		viewportStableHeight: number;
-		/**
-		 * An object for controlling the main button, which is displayed at the bottom of the Web App in the Telegram interface.
-		 */
 		MainButton: MainButton;
-		/**
-		 * An object for controlling the main button, which is displayed at the bottom of the Web App in the Telegram interface.
-		 */
 		BackButton: BackButton;
 		/**
 		 * A method that sets the app event handler.
@@ -80,6 +57,7 @@ export declare namespace TelegramWebApps {
 		 * A method that closes the Web App.
 		 */
 		close(): void;
+		openTelegramLink: (url: string) => void;
 	}
 
 	interface ThemeParams {
@@ -113,6 +91,7 @@ export declare namespace TelegramWebApps {
 		 * Also available as the CSS variable var(--tg-theme-button-text-color).
 		 */
 		button_text_color?: string;
+		destructive_text_color?: string;
 	}
 
 	interface WebAppInitData {

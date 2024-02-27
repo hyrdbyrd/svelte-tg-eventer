@@ -25,8 +25,6 @@
         <Text slot="title" role={item.isDestuctive ? 'destructive' : 'main'}>
             {item.text}
         </Text>
-        <Bullet slot="after">
-            {item.pin}
-        </Bullet>
+        <Bullet value={item.pin} slot="after" />
     </MenuItem>
 {/each}

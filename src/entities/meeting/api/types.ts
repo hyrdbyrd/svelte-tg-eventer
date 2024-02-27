@@ -13,5 +13,6 @@ export interface ApiMeeting {
 	timeStart?: Nil<string>;
 	meetingId?: Nil<number>;
 	userIds?: Nil<number[]>;
+	meetingNote?: Nil<string>;
 	description?: Nil<string>;
 }

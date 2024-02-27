@@ -11,7 +11,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"deploy": "gh-pages -d build -t true"
+		"deploy:gh": "gh-pages -d build -t true",
+		"deploy": "run-s build deploy:gh"
 	},
 	"devDependencies": {
 		"@feature-sliced/eslint-config": "^0.1.0-beta.6",

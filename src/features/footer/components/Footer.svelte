@@ -25,7 +25,7 @@
         width: 100%;
         padding: 6px;
 
-        box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, .1);
+        box-shadow: 0px -4px 4px 0px color-mix(in srgb, var(--bg-secondary-color) 30%, transparent);
 
         height: var(--footer-height);
     }

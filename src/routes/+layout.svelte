@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { attachLogger } from 'effector-logger';
 
+	import { base } from '$app/paths';
 	import { dev } from '$app/environment';
 
 	import { getTelegram } from '@/shared/lib';
@@ -33,14 +34,15 @@
     let userId = $page.url.searchParams.get('userId')!;
     let eventId = $page.url.searchParams.get('eventId')!;
 
-    // Подгружаем всех пользователей
-    getAllUsersFx(eventId);
-    getUserFx({ eventId, userId });
-
-    // Подгружаем встречи
-    getAvailableCustomMeetingsFx(eventId);
-    getUserMeetingsFx({ eventId, userId });
-    getEndedUserMeetingsFx({ eventId, userId });
+	let waitFor = [
+		// Подгружаем всех пользователей
+		getAllUsersFx(eventId),
+		getUserFx({ eventId, userId }),
+		// Подгружаем встречи
+		getUserMeetingsFx({ eventId, userId }),
+		getEndedUserMeetingsFx({ eventId, userId }),
+		getAvailableCustomMeetingsFx({ eventId, userId }),
+	];
 
     // Слушаем событие "Собеседник найден"
     afterUpdate(() =>
@@ -48,20 +50,22 @@
     );
 
     $: {
-        if ($page.url.pathname === '/') hideBackButton();
+        if ($page.url.pathname === (base.startsWith('/') ? base : `${base}/`)) hideBackButton();
         else showBackButton();
     }
 
 	if (dev) attachLogger();
 </script>
 
-<div class="app">
-	<main>
-		{#if mounted}
-			<slot />
-		{/if}
-	</main>
-</div>
+{#await Promise.all(waitFor) then}
+	<div class="app">
+		<main>
+			{#if mounted}
+				<slot />
+			{/if}
+		</main>
+	</div>
+{/await}
 
 <style>
 	.app {
