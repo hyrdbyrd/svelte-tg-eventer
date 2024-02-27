@@ -37,7 +37,7 @@
 	let waitFor = [
 		// Подгружаем всех пользователей
 		getAllUsersFx(eventId),
-		getUserFx({ eventId, userId }),
+		// getUserFx({ eventId, userId }),
 		// Подгружаем встречи
 		getUserMeetingsFx({ eventId, userId }),
 		getEndedUserMeetingsFx({ eventId, userId }),

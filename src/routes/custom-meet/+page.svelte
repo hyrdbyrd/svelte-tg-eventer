@@ -28,8 +28,8 @@
             description,
             status: 'ACCEPTED',
             type: 'CUSTOM_MEETING',
+            capacity: withCount ? null : Number(capacity),
             eventId: Number($page.url.searchParams.get('eventId')!),
-            capacity: capacity ? Number(capacity) : undefined,
             organizatorId: Number($page.url.searchParams.get('userId')!),
         })
             .then((data) => goFromMain('/meeting', { meetingId: data.id! }))
