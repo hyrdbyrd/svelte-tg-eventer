@@ -104,7 +104,7 @@
         <FieldSection value={`${meetUsers.length} из ${meeting.capacity}`} description="Количество участников" />
     {/if}
 
-    {#if isEnded && !isRejected}
+    {#if isEnded && !isRejected && rate !== -1}
         <Section type="main" title="Оценка">
             <Section type="inner">
                 <RateMeeeting bind:currentRate={rate} />
@@ -125,28 +125,28 @@
         </Section>
     {/if}
 
-        {#if isEnded && !isRejected}
-            <Footer>
-                <Button
-                    wide
-                    on:click={markMeet}
-                    disabled={!rate || isLoading}
-                >
-                    Сохранить
-                </Button>
-            </Footer>
-        {:else if isAvailable}
-            <Footer>
-                <Button wide on:click={joinMeeting}>Вступить</Button>
-            </Footer>
-        {:else if !isRejected}
-            <Footer>
-                <Button wide on:click={goToChat}>
-                    Чат
-                </Button>
-                <Button on:click={goToCard} wide>
-                    Карточка
-                </Button>
-            </Footer>
-        {/if}
+    {#if isEnded && !isRejected && rate !== -1}
+        <Footer>
+            <Button
+                wide
+                on:click={markMeet}
+                disabled={!rate || isLoading}
+            >
+                Сохранить
+            </Button>
+        </Footer>
+    {:else if isAvailable}
+        <Footer>
+            <Button wide on:click={joinMeeting}>Вступить</Button>
+        </Footer>
+    {:else if !isRejected && rate !== -1}
+        <Footer>
+            <Button wide on:click={goToChat}>
+                Чат
+            </Button>
+            <Button on:click={goToCard} wide>
+                Карточка
+            </Button>
+        </Footer>
+    {/if}
 {/if}

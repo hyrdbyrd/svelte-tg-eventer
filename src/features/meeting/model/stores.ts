@@ -14,6 +14,7 @@ import {
 	leftMeetingFx,
 	markMeetingFx,
 	getUserMeetingsFx,
+	createCustomMeetingFx,
 	getEndedUserMeetingsFx,
 	getAvailableCustomMeetingsFx,
 } from './effects';
@@ -30,7 +31,8 @@ export const myMeetings = createStore<Meeting[]>([], { name: 'myMeetings' })
 	.on(fastMeetingUserFound, (state, meet) => [meet, ...state])
 	.on(meetingEnd, (state, meet) => eraseMeet(state, meet.id!))
 	.on(meetingUpdated, (state, meet) => updateMeeting(state, meet, 'MY'))
-	.on(leftMeetingFx.doneData, (state, { meetingId }) => eraseMeet(state, meetingId));
+	.on(leftMeetingFx.doneData, (state, { meetingId }) => eraseMeet(state, meetingId))
+	.on(createCustomMeetingFx.doneData, (state, meet) => [meet, ...state]);
 
 export const endedMeetings = createStore<Meeting[]>([], { name: 'endedMeetings' })
 	.on(meetingBecomeEnd, (state, meet) => [...state, meet])

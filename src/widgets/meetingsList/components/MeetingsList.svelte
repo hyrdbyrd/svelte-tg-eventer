@@ -12,9 +12,11 @@
     function handleMeeting(id: Nil<number>) {
         goFromMain('/meeting', { meetingId: id! });
     }
+
+    $: allLength = meetings.length && meetings.filter(meet => meet.userIds).length;
 </script>
 
-{#if meetings.length}
+{#if allLength}
     <Section type="main" {title}>
         {#each meetings as meeting (meeting.id)}
             <Section type="inner" on:click={() => handleMeeting(meeting.id)}>

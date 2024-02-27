@@ -1,4 +1,5 @@
 import { afterUpdate } from 'svelte';
+import { goToMain } from '..';
 
 export function getTelegram(): typeof Telegram.WebApp {
 	return Telegram.WebApp;
@@ -10,7 +11,7 @@ export function showBackButton() {
 	afterUpdate(() => {
 		tg.BackButton.show();
 
-		const onBack = () => history.back();
+		const onBack = () => goToMain();
 
 		tg.BackButton.onClick(onBack);
 		return () => tg.BackButton.offClick(onBack);

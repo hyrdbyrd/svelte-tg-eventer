@@ -21,7 +21,7 @@
         userIds = [],
     } = meeting;
 
-    let usersInMeeting = compact(userIds!.map(id => findUserById(id, $users)));
+    let usersInMeeting = compact(userIds?.map(id => findUserById(id, $users)) || []);
 
     $: {
         if (name === null) {
@@ -32,20 +32,22 @@
     }
 </script>
 
-<Stack wide gap="8" direction="vertical">
-	<Stack wide gap="4" justify="between" align="start">
-		<Text role="main">{name}</Text>
-	</Stack>
-	<Stack wide gap="4" justify="between" align="end">
-        <Capacity users={usersInMeeting} maxCount={capacity} />
-        {#if queueType === 'ENDED'}
-            {#if typeof rate === 'number'}
-                <Rating {rate} />
-            {:else if meeting.status === 'REJECTED'}
-                <Text role="destructive">Запрос отклонен</Text>
-            {:else}
-                <Text role="accent">Оцените встречу</Text>
+{#if usersInMeeting.length}
+    <Stack wide gap="8" direction="vertical">
+        <Stack wide gap="4" justify="between" align="start">
+            <Text role="main">{name}</Text>
+        </Stack>
+        <Stack wide gap="4" justify="between" align="end">
+            <Capacity users={usersInMeeting} maxCount={capacity} />
+            {#if queueType === 'ENDED'}
+                {#if typeof rate === 'number' && rate !== -1}
+                    <Rating {rate} />
+                {:else if meeting.status === 'REJECTED'}
+                    <Text role="destructive">Запрос отклонен</Text>
+                {:else if rate !== -1}
+                    <Text role="accent">Оцените встречу</Text>
+                {/if}
             {/if}
-        {/if}
-	</Stack>
-</Stack>
+        </Stack>
+    </Stack>
+{/if}
