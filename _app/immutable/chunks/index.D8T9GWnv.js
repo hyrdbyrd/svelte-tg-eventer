@@ -1,0 +1,1 @@
+import{a}from"./scheduler.B75WiLcw.js";function n(){return Telegram.WebApp}function e(){const t=n();a(()=>{t.BackButton.show();const o=()=>history.back();return t.BackButton.onClick(o),()=>t.BackButton.offClick(o)})}function B(){n().BackButton.hide()}export{n as g,B as h,e as s};
