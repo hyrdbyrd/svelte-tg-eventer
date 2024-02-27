@@ -3,17 +3,21 @@
 
     import Text from '@/shared/components/Text.svelte';
     import Field from '@/shared/components/Field.svelte';
+    import Button from '@/shared/components/Button.svelte';
     import Section from '@/shared/components/Section.svelte';
 
     import { Footer } from '@/features/footer';
 
     import { users, UserAvatarsList } from '@/features/user';
+    import { isRequestAlredyExistFx } from '@/features/meeting';
 
-    let userId = $page.url.searchParams.get('userId');
-    let userForId = $page.url.searchParams.get('userForId');
+    let userId = $page.url.searchParams.get('userId')!;
+    let eventId = $page.url.searchParams.get('eventId')!;
+    let userForId = $page.url.searchParams.get('userForId')!;
 
-    $: currentUser = $users.find(user => String(user.meta.id) === userId)!;
     $: hereUser = $users.find(user => String(user.meta.id) === userForId)!;
+
+    let isRequestAlredyExist = isRequestAlredyExistFx({ eventId, userFromId: userId, userToId: userForId });
 </script>
 
 <!-- TODO: i18n -->
@@ -35,4 +39,11 @@
             </Field>
         </Section>
     {/if}
+    {#await isRequestAlredyExist then isExist}
+        <Footer>
+            <Button wide disabled={isExist}>
+                {isExist ? 'Запрос отправлен' : 'Запросить встречу'}
+            </Button>
+        </Footer>
+    {/await}
 {/if}

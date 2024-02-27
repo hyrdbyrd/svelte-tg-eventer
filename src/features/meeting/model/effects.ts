@@ -9,6 +9,7 @@ import {
 	markMeetingFinished,
 	createCustomMeeting,
 	getEndedUserMeetings,
+	isRequestAlredyExist,
 	getAvailableCustomMeetings,
 } from '@/entities/meeting';
 
@@ -40,6 +41,10 @@ export const leftMeetingFx = createEffect(({ eventId, userId, meetingId }: MeetP
 );
 export const getAvailableCustomMeetingsFx = createEffect(({ userId, eventId }: Param) =>
 	getAvailableCustomMeetings(eventId, userId),
+);
+export const isRequestAlredyExistFx = createEffect(
+	({ eventId, userFromId, userToId }: { eventId: string; userFromId: string; userToId: string }) =>
+		isRequestAlredyExist(eventId, userFromId, userToId),
 );
 
 export const createCustomMeetingFx = createEffect(createCustomMeeting);

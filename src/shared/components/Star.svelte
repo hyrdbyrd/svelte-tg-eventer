@@ -7,6 +7,8 @@
 	export let filled: boolean = false;
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <svg on:click fill="none" width={size} height={size} viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 	<path
 		fill={filled ? tg.themeParams.hint_color : '#EFAB39'}
