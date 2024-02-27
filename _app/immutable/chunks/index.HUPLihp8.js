@@ -1,1 +1,0 @@
-import{a}from"./scheduler.CUCWr7Ms.js";import"./Stack.svelte_svelte_type_style_lang.BvmJlThE.js";import{g as c}from"./index.CQkJQw-n.js";function n(){return Telegram.WebApp}function i(){const t=n();a(()=>{t.BackButton.show();const o=()=>c();return t.BackButton.onClick(o),()=>t.BackButton.offClick(o)})}function s(){n().BackButton.hide()}export{n as g,s as h,i as s};
