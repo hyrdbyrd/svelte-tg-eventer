@@ -54,7 +54,7 @@
 	$: isRejected = meeting?.status === 'REJECTED';
 	$: isWaitingResponse = meeting?.status === 'AWAITING_RESPONSE';
 
-	$: canFinishMeeting = isOneByOne && isMy && !isWaitingResponse && !isEnded;
+	$: canFinishMeeting = (isOneByOne || isCurrentUserOrganizator) && isMy && !isWaitingResponse && !isEnded;
 
 	$: isOneByOne = isRequest || isFast;
 	$: isRateAvailable = isEnded && !isRejected && rate !== -1;
