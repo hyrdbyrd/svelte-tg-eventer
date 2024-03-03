@@ -1,3 +1,4 @@
+import type { MeetingRequest } from '../lib/types';
 import type { MeetingStatus, MeetingType } from '../lib/constants';
 
 export interface ApiMeeting {
@@ -15,4 +16,7 @@ export interface ApiMeeting {
 	userIds?: Nil<number[]>;
 	meetingNote?: Nil<string>;
 	description?: Nil<string>;
+	telegramChatLink?: Nil<string>;
 }
+
+export type ApiMeetingRequest = MeetingRequest;

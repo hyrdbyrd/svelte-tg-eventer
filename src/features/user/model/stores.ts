@@ -7,7 +7,7 @@ import { updateUsers, userRegistered } from './events';
 
 import { findUserIndexByApiUser, filterExistingUsers } from './helpers';
 
-export const users = createStore<User[]>([])
+export const users = createStore<User[]>([], { name: 'users' })
 	.on(getAllUsersFx.doneData, (state, users) => state.concat(filterExistingUsers(state, users)))
 	.on(userRegistered, (state, user) => [...state, user])
 	.on(updateUsers, (state, user) => {

@@ -28,18 +28,18 @@ export function mapApiUserToClient(user: ApiUser | ApiUserMeta): User {
 		meta: {
 			id: user.userId,
 			description: user.userInfo,
+			userName: user.userName || '',
 			photoLink: user.photoLink || undefined,
-			userName: user.userName || telegram.userName,
 		},
 	};
 }
 
-export function mapClientUserToApi(user: User): ApiUserMeta {
+export function mapClientUserToApi(user: Omit<User, 'telegram'>): ApiUserMeta {
 	return {
 		userId: user.meta.id,
 		eventId: user.eventId,
 		userName: user.meta.userName,
 		userInfo: user.meta.description,
-		photoLink: user.meta.photoLink || null
+		photoLink: user.meta.photoLink || null,
 	};
 }

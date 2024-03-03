@@ -1,7 +1,8 @@
-import { api } from '@/shared/lib';
+import { api } from '@/shared/lib/handlers';
+
+import type { User } from '../lib/types';
 
 import type { ApiUser } from './types';
-import type { User } from '../lib/types';
 import { mapApiUserToClient, mapClientUserToApi } from './helpers';
 
 export function getUsers(eventId: string) {
@@ -11,7 +12,7 @@ export function getUsers(eventId: string) {
 		.then((users) => users.map(mapApiUserToClient));
 }
 
-export function updateUser(user: User) {
+export function updateUser(user: Omit<User, 'telegram'>) {
 	return api
 		.post<ApiUser>(`/form/${user.eventId}/${user.meta.id}`, mapClientUserToApi(user))
 		.then((respond) => respond.data)
@@ -22,7 +23,9 @@ export function getUser(eventId: string, userId: string) {
 	return api
 		.get<ApiUser>(`/form/${eventId}/${userId}`)
 		.then((responed) => responed.data)
-		.then(mapApiUserToClient);
+		.then(mapApiUserToClient)
+		.then((user) => (user.meta.userName ? user : null))
+		.catch(() => null);
 }
 
 export function starSearchFastMeeting(eventId: string, userId: string) {

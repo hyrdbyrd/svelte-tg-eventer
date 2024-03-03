@@ -1,6 +1,7 @@
 import { map } from 'rxjs';
 
-import { fromEventSource, apiEventSource } from '@/shared/lib';
+import { fromEventSource } from '@/shared/lib/rxjs';
+import { apiEventSource } from '@/shared/lib/events';
 
 import type { ApiMeeting } from './types';
 import { mapApiMeetingToClient } from './helpers';

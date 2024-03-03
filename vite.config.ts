@@ -14,7 +14,7 @@ function getPort(): number {
 export default defineConfig(({ command }) => {
 	if (command === 'build') {
 		return {
-			plugins: [sveltekit()]
+			plugins: [sveltekit()],
 		};
 	}
 
@@ -23,16 +23,9 @@ export default defineConfig(({ command }) => {
 			sveltekit(),
 			ngrok({
 				port: getPort(),
-				host: `https://localhost:${getPort()}`,
 				authtoken: process.env.NGROK_AUTHTOKEN,
-				domain: process.env.PUBLIC_STATIC_DOMAIN
-			})
+				domain: process.env.NGROCK_STATIC_DOMAIN,
+			}),
 		],
-		server: {
-			host: true,
-			// TODO: logic (creds, origin, PUBLIC_API)
-			cors: false,
-			port: getPort()
-		}
 	};
 });

@@ -13,7 +13,7 @@ export const RequestType = {
 	 */
 	request: 'request',
 	/** Если type = fastmeeting, meetingId это индекс уже принятой встречи */
-	fastmeeting: 'fastmeeting'
+	fastmeeting: 'fastmeeting',
 };
 
 export type RequestType = keyof typeof RequestType;

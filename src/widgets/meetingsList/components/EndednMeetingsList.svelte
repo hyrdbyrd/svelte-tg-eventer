@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { endedMeetings } from "@/features/meeting";
+	import { endedMeetings } from '@/features/meeting';
 
-	import MeetingsList from "./MeetingsList.svelte";
+	import MeetingsList from './MeetingsList.svelte';
 </script>
 
 <!-- TODO: i18n -->

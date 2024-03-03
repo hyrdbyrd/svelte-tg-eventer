@@ -4,7 +4,6 @@ import {
 	type Meeting,
 	type MeetingQueueType,
 } from '@/entities/meeting';
-import { findIndex } from 'rxjs';
 
 export function eraseMeet(meetings: Meeting[], id: number) {
 	const idx = meetings.findIndex((meet) => meet.id === id);
@@ -24,4 +23,17 @@ export function updateMeeting(
 	}
 
 	return meetings;
+}
+
+export function addMeeting(
+	meetings: Meeting[],
+	meeting: Meeting
+) {
+	const idx = meetings.findIndex(meet => meet.id === meeting.id);
+	if (idx !== -1) {
+		meetings[idx] = meeting;
+		return [...meetings];
+	}
+
+	return [meeting, ...meetings];
 }

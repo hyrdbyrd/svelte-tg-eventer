@@ -6,8 +6,10 @@ import {
 	markMeeting,
 	getUserMeetings,
 	meetingNotHappend,
+	sendMeetingRequest,
 	markMeetingFinished,
 	createCustomMeeting,
+	answerMeetingRequest,
 	getEndedUserMeetings,
 	isRequestAlredyExist,
 	getAvailableCustomMeetings,
@@ -16,6 +18,7 @@ import {
 type Param = { userId: string; eventId: string };
 type MeetParam = Param & { meetingId: string };
 type MarkMeetParam = MeetParam & { mark: number; meetingNote: string };
+type MeetReqParam = { eventId: string; userFromId: string; userToId: string };
 
 export const getUserMeetingsFx = createEffect(({ userId, eventId }: Param) =>
 	getUserMeetings(eventId, userId),
@@ -43,8 +46,20 @@ export const getAvailableCustomMeetingsFx = createEffect(({ userId, eventId }: P
 	getAvailableCustomMeetings(eventId, userId),
 );
 export const isRequestAlredyExistFx = createEffect(
-	({ eventId, userFromId, userToId }: { eventId: string; userFromId: string; userToId: string }) =>
+	({ eventId, userFromId, userToId }: MeetReqParam) =>
 		isRequestAlredyExist(eventId, userFromId, userToId),
+);
+export const sendMeetingRequestFx = createEffect(
+	({ eventId, userFromId, userToId }: MeetReqParam) =>
+		sendMeetingRequest(eventId, userFromId, userToId),
+);
+export const acceptMeetingRequestFx = createEffect(
+	({ eventId, userFromId, userToId }: MeetReqParam) =>
+		answerMeetingRequest(eventId, userFromId, userToId, true),
+);
+export const rejectMeetingRequestFx = createEffect(
+	({ eventId, userFromId, userToId }: MeetReqParam) =>
+		answerMeetingRequest(eventId, userFromId, userToId, false),
 );
 
 export const createCustomMeetingFx = createEffect(createCustomMeeting);

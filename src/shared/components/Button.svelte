@@ -20,7 +20,7 @@
 		background-color: var(--button-green-color);
 	}
 
-	button:disabled {
+	button:disabled, .gray {
 		color: white;
 		background-color: var(--button-disabled-color);
 	}

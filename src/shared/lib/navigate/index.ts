@@ -5,9 +5,8 @@ export function goFromMain(url: string = '', params: Record<string, string | num
 	const nextUrl = new URL(location.href);
 	nextUrl.pathname = base + (url.startsWith('/') ? url : `/${url}`);
 
-	for (const [key, value] of Object.entries(params)) {
-		nextUrl.searchParams.set(key, String(value));
-	}
+	nextUrl.searchParams.delete('no_back');
+	for (const [key, value] of Object.entries(params)) nextUrl.searchParams.set(key, String(value));
 
 	return goto(nextUrl);
 }

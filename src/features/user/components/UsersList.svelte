@@ -6,10 +6,10 @@
 
 	import type { User as UserType } from '@/entities/user';
 
-    import User from './User.svelte';
+	import User from './User.svelte';
 	import { page } from '$app/stores';
 
-    export let users: UserType[];
+	export let users: UserType[];
 
 	// TODO: prettify (aka react-hooks)
 	let listHeight = 0;

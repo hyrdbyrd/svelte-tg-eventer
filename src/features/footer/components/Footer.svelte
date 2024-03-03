@@ -1,32 +1,32 @@
 <script lang="ts">
-	import Stack from "@/shared/components/Stack.svelte";
+	import Stack from '@/shared/components/Stack.svelte';
 </script>
 
 {#if $$slots.default}
-    <footer>
-        <Stack gap="6">
-            <slot />
-        </Stack>
-    </footer>
+	<footer>
+		<Stack gap="6">
+			<slot />
+		</Stack>
+	</footer>
 {/if}
 
 <style>
-    footer {
-        background-color: var(--bg-secondary-color);
+	footer {
+		background-color: var(--bg-secondary-color);
 
-        z-index: 1000;
+		z-index: 1000;
 
-        position: fixed;
-        box-sizing: border-box;
+		position: fixed;
+		box-sizing: border-box;
 
-        left: 0;
-        bottom: 0;
+		left: 0;
+		bottom: 0;
 
-        width: 100%;
-        padding: 6px;
+		width: 100%;
+		padding: 6px;
 
-        box-shadow: 0px -4px 4px 0px color-mix(in srgb, var(--bg-secondary-color) 30%, transparent);
+		box-shadow: 0px -4px 4px 0px color-mix(in srgb, var(--bg-secondary-color) 30%, transparent);
 
-        height: var(--footer-height);
-    }
+		height: var(--footer-height);
+	}
 </style>

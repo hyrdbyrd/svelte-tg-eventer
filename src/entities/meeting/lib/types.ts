@@ -15,8 +15,16 @@ export interface MeetingMeta {
 	timeStart?: Nil<string>;
 	meetingNote?: Nil<string>;
 	description?: Nil<string>;
+	telegramChatLink?: Nil<string>;
 }
 
 export interface Meeting extends MeetingMeta {
 	queueType: MeetingQueueType;
+}
+
+export interface MeetingRequest {
+	idTo: number;
+	idFrom: number;
+	eventId: number;
+	status: MeetingStatus;
 }

@@ -1,5 +1,6 @@
 import { afterUpdate } from 'svelte';
-import { goToMain } from '..';
+
+import { goToMain } from '../navigate';
 
 export function getTelegram(): typeof Telegram.WebApp {
 	return Telegram.WebApp;
@@ -12,7 +13,6 @@ export function showBackButton() {
 		tg.BackButton.show();
 
 		const onBack = () => goToMain();
-
 		tg.BackButton.onClick(onBack);
 		return () => tg.BackButton.offClick(onBack);
 	});

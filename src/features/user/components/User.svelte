@@ -3,7 +3,7 @@
 	import Stack from '@/shared/components/Stack.svelte';
 	import Avatar from '@/shared/components/Avatar.svelte';
 	import Section from '@/shared/components/Section.svelte';
-	import { goFromMain } from '@/shared/lib';
+	import { goFromMain } from '@/shared/lib/navigate';
 
 	export let name: string;
 	export let userId: number;

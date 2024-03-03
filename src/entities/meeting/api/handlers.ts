@@ -1,6 +1,7 @@
-import { api } from '@/shared/lib';
+import { api } from '@/shared/lib/handlers';
 
 import type { MeetingMeta } from '../lib/types';
+import { MeetingStatus } from '../lib/constants';
 
 import type { ApiMeeting } from './types';
 import { mapApiMeetingToClient, mapClientMeetingTo } from './helpers';
@@ -58,27 +59,34 @@ export function markMeeting(
 }
 
 export function joinMeeting(eventId: string, userId: string, meetingId: string) {
-	return api.post<unknown>(`/meeting/join_meeting/${eventId}/${userId}`, {
-		userId,
-		eventId,
-		meetingId,
-	});
+	return api
+		.post<ApiMeeting>(`/meeting/join_meeting/${eventId}/${userId}`, {
+			userId,
+			eventId,
+			meetingId,
+		})
+		.then((resp) => resp.data)
+		.then((meet) => mapApiMeetingToClient(meet, 'MY'));
 }
 
 export function markMeetingFinished(eventId: string, userId: string, meetingId: string) {
-	return api.post<unknown>(`/meeting/mark_meeting_finished/${eventId}`, {
-		eventId,
-		userId,
-		meetingId,
-	});
+	return api
+		.post<unknown>(`/meeting/mark_meeting_finished/${eventId}`, {
+			eventId,
+			userId,
+			meetingId,
+		})
+		.then(() => meetingId);
 }
 
 export function meetingNotHappend(eventId: string, userId: string, meetingId: string) {
-	return api.post<unknown>(`/meeting/meeting_not_happend/${eventId}/${userId}`, {
-		eventId,
-		userId,
-		meetingId,
-	});
+	return api
+		.post<unknown>(`/meeting/meeting_not_happend/${eventId}/${userId}`, {
+			eventId,
+			userId,
+			meetingId,
+		})
+		.then(() => meetingId);
 }
 
 export function leftMeeting(eventId: string, userId: string, meetingId: string) {
@@ -94,5 +102,33 @@ export function leftMeeting(eventId: string, userId: string, meetingId: string) 
 export function isRequestAlredyExist(eventId: string, userFromId: string, userToId: string) {
 	return api
 		.get<boolean>(`/meeting/is_request_already_exist/${eventId}/${userFromId}/${userToId}`)
+		.then((resp) => resp.data);
+}
+
+export function sendMeetingRequest(eventId: string, userFromId: string, userToId: string) {
+	return api
+		.post<ApiMeeting>(`/meeting/${eventId}/send_meeting_request`, {
+			eventId,
+			idTo: userToId,
+			idFrom: userFromId,
+			status: MeetingStatus.AWAITING_RESPONSE,
+		})
+		.then((resp) => resp.data)
+		.then((meet) => mapApiMeetingToClient(meet, 'MY'));
+}
+
+export function answerMeetingRequest(
+	eventId: string,
+	userFromId: string,
+	userToId: string,
+	isAccepted: boolean,
+) {
+	return api
+		.post<ApiMeeting>(`/meeting/${eventId}/answer_meeting_request`, {
+			eventId,
+			idTo: userToId,
+			idFrom: userFromId,
+			status: isAccepted ? MeetingStatus.ACCEPTED : MeetingStatus.REJECTED,
+		})
 		.then((resp) => resp.data);
 }

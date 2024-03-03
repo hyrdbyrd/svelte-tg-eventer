@@ -1,26 +1,30 @@
 <script lang="ts">
-    import { page } from '$app/stores';
+	import { page } from '$app/stores';
 
-	import { goFromMain } from '@/shared/lib';
+	import { goFromMain } from '@/shared/lib/navigate';
 	import Button from '@/shared/components/Button.svelte';
 
-    import { starSearchFastMeeting } from '@/entities/user';
+	import { starSearchFastMeeting } from '@/entities/user';
 
+	import { event } from '@/features/event';
 	import Footer from '@/features/footer/components/Footer.svelte';
 
 	import { RootNavigation } from '@/widgets/rootNavigation';
 	import { AvailableMeetingsList, MyMeetingsList } from '@/widgets/meetingsList';
 
-    let searchStarted = false;
+	let searchStarted = false;
 
-    function handleFastMeet() {
-        searchStarted = true;
-        starSearchFastMeeting($page.url.searchParams.get('eventId')!, $page.url.searchParams.get('userId')!);
-    }
+	function handleFastMeet() {
+		searchStarted = true;
+		starSearchFastMeeting(
+			$page.url.searchParams.get('eventId')!,
+			$page.url.searchParams.get('userId')!,
+		);
+	}
 
-    function handleCustomMeet() {
-        goFromMain('custom-meet');
-    }
+	function handleCustomMeet() {
+		goFromMain('custom-meet');
+	}
 </script>
 
 <RootNavigation />
@@ -30,10 +34,8 @@
 <AvailableMeetingsList />
 
 <Footer>
-    <Button wide disabled={searchStarted} on:click={handleFastMeet}>
-        Быстрая встреча
-    </Button>
-    <Button wide on:click={handleCustomMeet}>
-        Создать встречу
-    </Button>
+	<Button wide disabled={searchStarted} on:click={handleFastMeet}>Быстрая встреча</Button>
+	{#if $event.features.includes('IS_CUSTOM_MEETINGS_ALLOWED')}
+		<Button wide on:click={handleCustomMeet}>Создать встречу</Button>
+	{/if}
 </Footer>

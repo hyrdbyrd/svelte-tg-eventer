@@ -18,6 +18,7 @@ export function mapClientMeetingTo(meeting: MeetingMeta): ApiMeeting {
 		description: meeting.description,
 		meetingNote: meeting.meetingNote,
 		organisatorId: meeting.organizatorId,
+		telegramChatLink: meeting.telegramChatLink,
 	};
 }
 
@@ -37,5 +38,6 @@ export function mapApiMeetingToClient(meeting: ApiMeeting, queueType: MeetingQue
 		description: meeting.description,
 		meetingNote: meeting.meetingNote,
 		organizatorId: meeting.organisatorId,
+		telegramChatLink: meeting.telegramChatLink,
 	};
 }

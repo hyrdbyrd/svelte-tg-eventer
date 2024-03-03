@@ -1,6 +1,5 @@
 <script>
-	import { EndednMeetingsList } from "@/widgets/meetingsList";
-
+	import { EndednMeetingsList } from '@/widgets/meetingsList';
 </script>
 
 <EndednMeetingsList />
