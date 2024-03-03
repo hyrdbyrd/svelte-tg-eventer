@@ -5,9 +5,12 @@
 	import type { User } from '@/entities/user';
 
 	import { UserAvatar } from '@/features/user';
+	import UserAvatarsStub from '@/shared/components/UserAvatarsStub.svelte';
 
 	export let users: User[] = [];
 	export let maxCount: Nil<number> = null;
+
+	$: overcupCount = users.length - 3 < 0 ? 0 : users.length - 3;
 </script>
 
 <!-- TODO: i18n -->
@@ -18,4 +21,7 @@
 	{#each users.slice(0, 3) as user (user.meta.id)}
 		<UserAvatar {user} />
 	{/each}
+	{#if overcupCount}
+		<UserAvatarsStub color="secondary" count={overcupCount} />
+	{/if}
 </Stack>

@@ -1,11 +1,13 @@
 <script lang="ts">
 	import Stack from './Stack.svelte';
 	import Section from './Section.svelte';
+
+	export let disabled: boolean = false;
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<menu-item on:click>
+<menu-item on:click {disabled}>
 	<Section type="inner">
 		<Stack gap="20" align="center">
 			<slot name="icon" />

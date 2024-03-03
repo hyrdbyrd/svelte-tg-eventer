@@ -3,6 +3,7 @@
 
 	export type MenuItemType = {
 		text: string;
+		disabled?: boolean;
 		onClick: () => void;
 		icon: ComponentType;
 		pin?: Nil<number> | boolean;
@@ -16,11 +17,12 @@
 	import MenuItem from './MenuItem.svelte';
 
 	export let items: MenuItemType[];
+	export let disabled: boolean = false;
 </script>
 
 <!-- TODO: i18n -->
 {#each items as item}
-	<MenuItem on:click={item.onClick}>
+	<MenuItem disabled={disabled || item.disabled} on:click={disabled ? undefined : item.onClick}>
 		<svelte:component this={item.icon} slot="icon" />
 		<Text slot="title" role={item.isDestuctive ? 'destructive' : 'main'}>
 			{item.text}

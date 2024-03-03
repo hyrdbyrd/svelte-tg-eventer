@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { compact } from '@/shared/lib/stdlib';
+	import { page } from '$app/stores';
 
+	import { compact } from '@/shared/lib/stdlib';
 	import Text from '@/shared/components/Text.svelte';
 	import Stack from '@/shared/components/Stack.svelte';
 	import Rating from '@/shared/components/Rating.svelte';
@@ -13,9 +14,11 @@
 
 	export let meeting: Meeting;
 
+	let userId = $page.url.searchParams.get('userId')!;
+
 	let { name, rate, capacity, queueType, userIds = [] } = meeting;
 
-	let usersInMeeting = compact(userIds?.map((id) => findUserById(id, $users)) || []);
+	let usersInMeeting = compact(userIds?.map((id) => findUserById(id, $users)) || []).filter(user => user.meta.id !== Number(userId));
 
 	$: {
 		if (name === null) {

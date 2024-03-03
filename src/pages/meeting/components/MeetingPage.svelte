@@ -54,38 +54,33 @@
 	$: isRejected = meeting?.status === 'REJECTED';
 	$: isWaitingResponse = meeting?.status === 'AWAITING_RESPONSE';
 
+	$: canFinishMeeting = isOneByOne && isMy && !isWaitingResponse && !isEnded;
+
 	$: isOneByOne = isRequest || isFast;
 	$: isRateAvailable = isEnded && !isRejected && rate !== -1;
 
 	$: menuItmes = compact([
-		isOneByOne &&
-			isMy &&
-			!isEnded && {
-				icon: AcceptIcon,
-				text: 'Встреча закончилась',
-				onClick: () => markMeetingFinishedFx({ eventId, userId, meetingId }).then(() => goToMain()),
-			},
-		isOneByOne &&
-			isMy &&
-			!isEnded && {
-				icon: RejectIcon,
-				text: 'Встреча не состоялась',
-				onClick: () => meetingNotHappendFx({ eventId, userId, meetingId }).then(() => goToMain()),
-			},
+		canFinishMeeting && {
+			icon: AcceptIcon,
+			text: 'Встреча закончилась',
+			onClick: () => markMeetingFinishedFx({ eventId, userId, meetingId }).then(() => goToMain()),
+		},
+		canFinishMeeting && {
+			icon: RejectIcon,
+			text: 'Встреча не состоялась',
+			onClick: () => meetingNotHappendFx({ eventId, userId, meetingId }).then(() => goToMain()),
+		},
 		!isOneByOne && {
 			icon: UsersIcon,
 			text: 'Участники',
 			onClick: () => goFromMain('/meet-users', { meetingId }),
 		},
-		!isOneByOne &&
-			!isEnded &&
-			!isCurrentUserOrganizator &&
-			isMy && {
-				icon: ExitIcon,
-				text: 'Покинуть встречу',
-				onClick: () =>
-					leftMeetingFx({ eventId, userId, meetingId }).then(() => goToMain({ meetingId })),
-			},
+		!isOneByOne && !isEnded && !isCurrentUserOrganizator && isMy && {
+			icon: ExitIcon,
+			text: 'Покинуть встречу',
+			onClick: () =>
+				leftMeetingFx({ eventId, userId, meetingId }).then(() => goToMain({ meetingId })),
+		},
 	]);
 
 	const tg = getTelegram();
@@ -136,12 +131,14 @@
 {#if meeting}
 	<UserAvatarsList users={meetUsersOmitCurrent} />
 	<FieldSection
-		value={meeting.name || meetUsers.map((user) => user.meta.userName).join(' ')}
+		value={meeting.name || meetUsersOmitCurrent.map((user) => user.meta.userName).join(' ')}
 		description="Имя"
 	/>
+
 	{#if meeting.description}
 		<FieldSection value={meeting.description} description="Описание" />
 	{/if}
+
 	{#if meeting.capacity}
 		<FieldSection
 			value={`${meetUsers.length} из ${meeting.capacity}`}
@@ -166,7 +163,7 @@
 
 	{#if menuItmes?.length}
 		<Section title="Подробности" type="main">
-			<Menu items={menuItmes} />
+			<Menu disabled={isLoading} items={menuItmes} />
 		</Section>
 	{/if}
 
@@ -176,7 +173,7 @@
 		</Footer>
 	{:else if isAvailable && isCustom}
 		<Footer>
-			<Button wide on:click={joinMeeting}>Вступить</Button>
+			<Button disabled={isLoading} wide on:click={joinMeeting}>Вступить</Button>
 		</Footer>
 	{:else if isMy && !isWaitingResponse}
 		<Footer>
@@ -187,8 +184,8 @@
 		</Footer>
 	{:else if isRequest && isWaitingResponse && isMy && !isCurrentUserOrganizator}
 		<Footer>
-			<Button wide color="red" on:click={rejectMeeting}>Отклонить</Button>
-			<Button wide color="green" on:click={acceptMeeting}>Принять</Button>
+			<Button disabled={isLoading} wide color="red" on:click={rejectMeeting}>Отклонить</Button>
+			<Button disabled={isLoading} wide color="green" on:click={acceptMeeting}>Принять</Button>
 		</Footer>
 	{:else if isRequest && isWaitingResponse && isMy && isCurrentUserOrganizator}
 		<Footer>
