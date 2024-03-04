@@ -49,6 +49,7 @@ body {
 	user-select: none;
 	overflow-x: hidden;
 	background-color: var(--bg-secondary-color);
+	/* padding-bottom: env(safe-area-inset-bottom); */
 }
 
 h1,
@@ -94,4 +95,8 @@ button:focus:not(:focus-visible) {
 	h1 {
 		font-size: 2.4rem;
 	}
+}
+
+* {
+	-webkit-overflow-scrolling: auto;
 }

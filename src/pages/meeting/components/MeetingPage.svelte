@@ -64,7 +64,7 @@
 	$: canFinishMeeting = (isOneByOne || isCurrentUserOrganizator) && isMy && !isWaitingResponse && !isEnded;
 
 	$: isOneByOne = isRequest || isFast;
-	$: isRateAvailable = isEnded && !isRejected && rate !== -1;
+	$: isRateAvailable = isEnded && (!isRejected || rate !== -1);
 
 	$: menuItmes = compact([
 		!isOneByOne && {
@@ -143,18 +143,21 @@
 {#if meeting}
 	<UserAvatarsList users={meetUsers} />
 	<FieldSection
+		description={isOneByOne ? "Имя" : "Название встречи"}
 		value={meeting.name || meetUsersOmitCurrent.map((user) => user.meta.userName).join(' ')}
-		description="Имя"
 	/>
 
 	{#if meeting.description}
-		<FieldSection value={meeting.description} description="Описание" />
+		<FieldSection
+			value={meeting.description}
+			description={isOneByOne ? "Описание" : "Описание встречи"}
+		/>
 	{/if}
 
 	{#if meeting.capacity}
 		<FieldSection
-			value={`${meetUsers.length} из ${meeting.capacity}`}
 			description="Количество участников"
+			value={`${meetUsers.length} из ${meeting.capacity}`}
 		/>
 	{/if}
 

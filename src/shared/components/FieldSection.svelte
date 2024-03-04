@@ -10,11 +10,11 @@
 
 <Section type="inner">
 	<Field>
-		<Text slot="name" role={accent ? 'accent' : 'main'} truncate={false}>
+		<Text slot="name" role={accent ? 'accent' : 'main'}>
 			{value}
 			<slot name="value" />
 		</Text>
-		<Text slot="content" role="secondary" truncate={false}>
+		<Text slot="content" role="secondary">
 			{description}
 			<slot name="description" />
 		</Text>

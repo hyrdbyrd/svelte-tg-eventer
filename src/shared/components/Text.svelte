@@ -6,7 +6,7 @@
 	export let bold: boolean = false;
 	export let role: RoleType = 'main';
 
-	export let truncate: boolean = true;
+	export let truncate: boolean = false;
 	export let align: string | undefined = undefined;
 
 	export let as: 'p' | 'span' | 'div' = truncate ? 'p' : 'span';

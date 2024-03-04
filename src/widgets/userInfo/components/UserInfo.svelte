@@ -16,14 +16,14 @@
 
 	<Section type="inner">
 		<Field>
-			<Text slot="name" role="main" truncate={false}>{user.meta.userName}</Text>
+			<Text slot="name" role="main">{user.meta.userName}</Text>
 			<Text slot="content" role="secondary">Имя</Text>
 		</Field>
 	</Section>
 	{#if user.meta.description}
 		<Section type="inner">
 			<Field>
-				<Text slot="name" role="main" truncate={false}>{user.meta.description}</Text>
+				<Text slot="name" role="main">{user.meta.description}</Text>
 				<Text slot="content" role="secondary">Описание</Text>
 			</Field>
 		</Section>

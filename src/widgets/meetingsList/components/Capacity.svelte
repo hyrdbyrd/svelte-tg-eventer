@@ -16,7 +16,7 @@
 <!-- TODO: i18n -->
 <Stack class={$$restProps.class} gap="8" align="center">
 	{#if maxCount}
-		<Text role="secondary" truncate={false}>{users.length} из {maxCount}</Text>
+		<Text role="secondary">{users.length} из {maxCount}</Text>
 	{/if}
 	{#each users.slice(0, 3) as user (user.meta.id)}
 		<UserAvatar {user} />

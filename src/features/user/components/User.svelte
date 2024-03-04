@@ -44,9 +44,9 @@
 			</user-avatar>
 			<user-content style:max-width={`${maxWidth - 80}px`}>
 				<Stack direction="vertical">
-					<Text role="main">{name}</Text>
+					<Text role="main" truncate>{name}</Text>
 					<!-- TODO: i18n -->
-					<Text role="secondary" truncate={!isCurrent}>
+					<Text role="secondary" truncate>
 						{#if isCurrent}
 							Это вы
 						{:else}

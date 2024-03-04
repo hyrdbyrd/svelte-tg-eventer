@@ -24,7 +24,7 @@
 <!-- TODO: i18n -->
 <Stack wide gap="8" direction="vertical">
 	<Stack wide gap="4" justify="between" align="start">
-		<Text role="main">{name}</Text>
+		<Text role="main" truncate>{name}</Text>
 	</Stack>
 	<Stack wide gap="4" justify="between" align="end">
 		<Capacity users={usersInMeeting} maxCount={capacity} />
@@ -32,12 +32,12 @@
 			{#if typeof rate === 'number' && rate !== -1}
 				<Rating {rate} />
 			{:else if meeting.status === 'REJECTED'}
-				<Text role="destructive" as="div" truncate={false}>Запрос отклонен</Text>
+				<Text role="destructive" as="div">Запрос отклонен</Text>
 			{:else if rate !== -1}
-				<Text role="accent" as="div" truncate={false}>Оцените встречу</Text>
+				<Text role="accent" as="div">Оцените встречу</Text>
 			{/if}
 		{:else if meeting.status === 'AWAITING_RESPONSE'}
-			<Text role="main" as="div" truncate={false}>Запрос</Text>
+			<Text role="main" as="div">Запрос</Text>
 		{/if}
 	</Stack>
 </Stack>

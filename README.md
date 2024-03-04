@@ -1,5 +1,12 @@
 # Telegram eventer
 
+## Full build
+
+- Качаем nvm https://github.com/nvm-sh/nvm
+- Вводим ```nvm install && nvm use```
+- Вводим ```npm ci && npm run build```
+- Проект валяется собранным в папке `build`
+
 ## Serves
 
 UserId: 3
@@ -27,12 +34,6 @@ npm run dev -- --open
 
 ```bash
 npm run build
-```
-
-## Превью собраного в prod-режиме проекта
-
-```bash
-npm run preview
 ```
 
 ## TODO marks

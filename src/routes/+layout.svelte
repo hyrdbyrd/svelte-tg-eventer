@@ -103,10 +103,12 @@
 <style>
 	.app {
 		display: flex;
-		padding-bottom: 50px;
+		overflow-y: auto;
+		position: relative;
 		flex-direction: column;
 		box-sizing: border-box;
-		min-height: calc(100vh);
+		min-height: var(--viewport-height);
+		max-height: var(--viewport-height);
 	}
 
 	svelte-loader {
