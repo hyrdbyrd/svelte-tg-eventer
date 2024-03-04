@@ -6,7 +6,6 @@
 	import { getTelegram } from '@/shared/lib/telegram';
 	import Button from '@/shared/components/Button.svelte';
 	import Section from '@/shared/components/Section.svelte';
-	import Textarea from '@/shared/components/Textarea.svelte';
 	import ExitIcon from '@/shared/components/ExitIcon.svelte';
 	import { goFromMain, goToMain } from '@/shared/lib/navigate';
 	import UsersIcon from '@/shared/components/UsersIcon.svelte';
@@ -18,7 +17,6 @@
 	import { UserAvatarsList, users } from '@/features/user';
 	import {
 		allMeetings,
-		RateMeeeting,
 		joinMeetingFx,
 		markMeetingFx,
 		leftMeetingFx,
@@ -27,6 +25,9 @@
 		acceptMeetingRequestFx,
 		rejectMeetingRequestFx,
 	} from '@/features/meeting';
+
+	import Rate from './Rate.svelte';
+	import { onMount } from 'svelte';
 
 	let userId = $page.url.searchParams.get('userId')!;
 	let eventId = $page.url.searchParams.get('eventId')!;
@@ -46,8 +47,8 @@
 
 	$: isCurrentUserOrganizator = String(meeting?.organizatorId) === userId;
 
-	let rate = meeting?.rate || 0;
-	$: rateText = meeting?.meetingNote || '';
+	let rate = 0;
+	let rateText = '';
 
 	$: isRequest = meeting?.type === 'REQUEST';
 	$: isFast = meeting?.type === 'FAST_MEETING';
@@ -131,6 +132,11 @@
 			userToId: userId,
 		}).finally(() => (isLoading = false));
 	}
+
+	onMount(() => {
+		rate = meeting?.rate || 0;
+		rateText = meeting?.meetingNote || '';
+	})
 </script>
 
 <!-- TODO: i18n -->
@@ -153,18 +159,7 @@
 	{/if}
 
 	{#if isRateAvailable}
-		<Section type="main" title="Оценка">
-			<Section type="inner">
-				<RateMeeeting bind:currentRate={rate} />
-			</Section>
-			<Section type="inner">
-				<Textarea
-					bind:value={rateText}
-					name="Впечатления от встречи"
-					placeholder="Расскажите, как прошла встреча"
-				/>
-			</Section>
-		</Section>
+		<Rate {meeting} bind:rate bind:rateText />
 	{/if}
 
 	{#if menuItmes?.length}

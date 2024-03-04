@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	import Text from './Text.svelte';
 	import Field from './Field.svelte';
@@ -18,10 +18,10 @@
 
 	function handleAdaptiveSize(ev: Event) {
 		handleHeight(ev.target as HTMLTextAreaElement);
-
 	}
 
-	onMount(() => {
+	onMount(async () => {
+		await tick();
 		handleHeight(textareaRef);
 	});
 

@@ -6,13 +6,19 @@
 	export let bold: boolean = false;
 	export let role: RoleType = 'main';
 
-	export let truncate: boolean = false;
+	export let truncate: boolean = true;
 	export let align: string | undefined = undefined;
 
-	export let as: 'p' | 'span' = truncate ? 'p' : 'span';
+	export let as: 'p' | 'span' | 'div' = truncate ? 'p' : 'span';
 </script>
 
-<svelte:element this={as} class={cn(role, $$restProps.class)} class:truncate style:text-align={align} class:bold>
+<svelte:element
+	class={cn(role, $$restProps.class, 'element')}
+	this={as}
+	class:bold
+	class:truncate
+	style:text-align={align}
+>
 	<slot />
 </svelte:element>
 
@@ -48,5 +54,9 @@
 
 	.subtitle {
 		color: var(--subtitle-color);
+	}
+
+	.element {
+		word-break: break-word;
 	}
 </style>

@@ -21,6 +21,7 @@
 	$: usersInMeeting = compact(userIds.map((id) => findUserById(id, $users)) || []);
 </script>
 
+<!-- TODO: i18n -->
 <Stack wide gap="8" direction="vertical">
 	<Stack wide gap="4" justify="between" align="start">
 		<Text role="main">{name}</Text>
@@ -31,10 +32,12 @@
 			{#if typeof rate === 'number' && rate !== -1}
 				<Rating {rate} />
 			{:else if meeting.status === 'REJECTED'}
-				<Text role="destructive">Запрос отклонен</Text>
+				<Text role="destructive" as="div" truncate={false}>Запрос отклонен</Text>
 			{:else if rate !== -1}
-				<Text role="accent">Оцените встречу</Text>
+				<Text role="accent" as="div" truncate={false}>Оцените встречу</Text>
 			{/if}
+		{:else if meeting.status === 'AWAITING_RESPONSE'}
+			<Text role="main" as="div" truncate={false}>Запрос</Text>
 		{/if}
 	</Stack>
 </Stack>
