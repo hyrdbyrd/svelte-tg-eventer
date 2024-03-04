@@ -9,7 +9,6 @@ export function dotsTicker(node: HTMLElement) {
 			dotsCount++;
 
 			if (dotsCount >= 4) {
-				console.log('AAA', node.innerText, node.innerText.slice(0, -6));
 				dotsCount = 0;
 				node.innerText = originalText;
 			}
