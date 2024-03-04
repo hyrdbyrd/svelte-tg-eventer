@@ -1,1 +1,0 @@
-import{b as r,g as s}from"./entry.Dcww9A8D.js";function c(a="",e={}){const t=new URL(location.href);t.pathname=r+(a.startsWith("/")?a:`/${a}`),t.searchParams.delete("no_back");for(const[o,n]of Object.entries(e))t.searchParams.set(o,String(n));return s(t)}function f(a={}){return c("",a)}export{c as a,f as g};
