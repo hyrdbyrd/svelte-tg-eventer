@@ -19,6 +19,10 @@
 
 	let isLoading = false;
 
+	function handleKeyPress(ev: KeyboardEvent) {
+		if (!/^\d*$/.test(ev.key)) ev.preventDefault();
+	}
+
 	function handleSave(ev: Event) {
 		ev.preventDefault();
 
@@ -28,7 +32,7 @@
 			description,
 			status: 'ACCEPTED',
 			type: 'CUSTOM_MEETING',
-			capacity: withCount ? null : Number(capacity),
+			capacity: withCount ? Number(capacity) : null,
 			eventId: Number($page.url.searchParams.get('eventId')!),
 			organizatorId: Number($page.url.searchParams.get('userId')!),
 		})
@@ -60,12 +64,15 @@
 		{#if withCount}
 			<Section>
 				<Input
-					bind:value={capacity}
-					placeholder="Введите максимальное число участников"
-					type="number"
 					min="0"
 					max="100"
+					type="number"
+					pattern="\d*"
+					inputmode="numeric"
+					bind:value={capacity}
+					on:keypress={handleKeyPress}
 					name="Количество участников"
+					placeholder="Введите максимальное число участников"
 				/>
 			</Section>
 		{/if}

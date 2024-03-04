@@ -14,9 +14,7 @@ bot.on('message', (ctx) => {
 		const params = JSON.parse(ctx.message.text);
 		const url = new URL(`https://${webAppUrl}`);
 
-		params.type && url.searchParams.set('type', params.type);
-		params.userId && url.searchParams.set('userId', params.userId);
-		params.eventId && url.searchParams.set('eventId', params.eventId);
+		for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
 
 		console.log(params, url.toString());
 
@@ -35,6 +33,7 @@ bot.on('message', (ctx) => {
 			},
 		});
 	} catch (e) {
+		console.error(e);
 		ctx.reply('No valid json');
 	}
 });

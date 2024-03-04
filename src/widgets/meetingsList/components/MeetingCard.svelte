@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-
 	import { compact } from '@/shared/lib/stdlib';
 	import Text from '@/shared/components/Text.svelte';
 	import Stack from '@/shared/components/Stack.svelte';
@@ -14,17 +12,13 @@
 
 	export let meeting: Meeting;
 
-	let userId = $page.url.searchParams.get('userId')!;
+	let { rate, capacity } = meeting;
 
-	let { name, rate, capacity, queueType, userIds = [] } = meeting;
+	$: userIds = meeting.userIds || [];
+	$: queueType = meeting.queueType;
+	$: name = meeting.name || usersInMeeting.map((user) => user.meta.userName).join(' ');
 
-	let usersInMeeting = compact(userIds?.map((id) => findUserById(id, $users)) || []).filter(user => user.meta.id !== Number(userId));
-
-	$: {
-		if (name === null) {
-			name = usersInMeeting.map((user) => user.meta.userName).join(' ');
-		}
-	}
+	$: usersInMeeting = compact(userIds.map((id) => findUserById(id, $users)) || []);
 </script>
 
 <Stack wide gap="8" direction="vertical">

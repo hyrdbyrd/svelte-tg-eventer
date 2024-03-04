@@ -68,11 +68,11 @@
 
 <Footer>
     {#if status === 'NOT_REGISTERED'}
-        <Button wide disabled={isLoading} on:click={handleRegistraion}>Участвовать в конкурсе</Button>
+        <Button wide disabled={isLoading} on:click={handleRegistraion}>Участвовать в розыгрыше</Button>
     {:else if status === 'REGISTERED'}
-        <Button wide color="green">Вы участвуете в конкурсе</Button>
+        <Button wide color="green">Вы участвуете в розыгрыше</Button>
     {:else}
-        <Button wide disabled>Конкурс закончился</Button>
+        <Button wide disabled>Розыгрыш закончился</Button>
     {/if}
 </Footer>
 

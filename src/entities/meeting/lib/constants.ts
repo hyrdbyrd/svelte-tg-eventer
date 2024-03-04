@@ -18,3 +18,10 @@ export const MeetingQueueType = {
 	ENDED: 'ENDED',
 	AVAILABLE: 'AVAILABLE',
 };
+
+export type SendMeetingRequestStatus = keyof typeof SendMeetingRequestStatus;
+export const SendMeetingRequestStatus = {
+	NOT_EXIST: 'NOT_EXIST',
+	ALREADY_EXIST: 'ALREADY_EXIST',
+	ALREADY_REJECTED: 'ALREADY_REJECTED',
+};

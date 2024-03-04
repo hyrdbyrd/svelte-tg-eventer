@@ -16,7 +16,7 @@
 
 {#if meetings.length}
 	<Section type="main" {title}>
-		{#each meetings as meeting}
+		{#each meetings as meeting (meeting.id)}
 			<Section type="inner" on:click={() => handleMeeting(meeting.id)}>
 				<MeetingCard {meeting} />
 			</Section>

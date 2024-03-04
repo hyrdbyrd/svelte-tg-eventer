@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	import Text from './Text.svelte';
 	import Field from './Field.svelte';
 
@@ -6,13 +8,38 @@
 	export let value: string = '';
 	export let placeholder: string = '';
 
+	let textareaRef: HTMLTextAreaElement | null = null;
+
+	function handleHeight(element: HTMLTextAreaElement | null) {
+		if (!element) return;
+		element.style.height = 'auto';
+		element.style.height = `${element.scrollHeight}px`;
+	}
+
+	function handleAdaptiveSize(ev: Event) {
+		handleHeight(ev.target as HTMLTextAreaElement);
+
+	}
+
+	onMount(() => {
+		handleHeight(textareaRef);
+	});
+
 	export let rows = 2;
 </script>
 
 <label>
 	<Field class={$$restProps.class}>
 		<Text slot="name" bold role="accent">{name}</Text>
-		<textarea {rows} slot="content" {placeholder} {name} bind:value />
+		<textarea
+			{rows}
+			{name}
+			bind:value
+			{placeholder}
+			slot="content"
+			bind:this={textareaRef}
+			on:input={handleAdaptiveSize}
+		/>
 	</Field>
 </label>
 

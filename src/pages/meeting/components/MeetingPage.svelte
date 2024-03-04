@@ -34,7 +34,13 @@
 
 	let isLoading = false;
 
-	let meeting = $allMeetings.find((meet) => String(meet.id) === meetingId);
+	$: meeting = $allMeetings.find((meet) => String(meet.id) === meetingId);
+
+	$: {
+		if (!meeting)
+			goToMain();
+	}
+
 	$: meetUsers = $users.filter((user) => meeting?.userIds?.includes(user.meta.id));
 	$: meetUsersOmitCurrent = meetUsers.filter((user) => user.meta.id !== Number(userId));
 
@@ -60,6 +66,11 @@
 	$: isRateAvailable = isEnded && !isRejected && rate !== -1;
 
 	$: menuItmes = compact([
+		!isOneByOne && {
+			icon: UsersIcon,
+			text: 'Участники',
+			onClick: () => goFromMain('/meet-users', { meetingId }),
+		},
 		canFinishMeeting && {
 			icon: AcceptIcon,
 			text: 'Встреча закончилась',
@@ -69,11 +80,6 @@
 			icon: RejectIcon,
 			text: 'Встреча не состоялась',
 			onClick: () => meetingNotHappendFx({ eventId, userId, meetingId }).then(() => goToMain()),
-		},
-		!isOneByOne && {
-			icon: UsersIcon,
-			text: 'Участники',
-			onClick: () => goFromMain('/meet-users', { meetingId }),
 		},
 		!isOneByOne && !isEnded && !isCurrentUserOrganizator && isMy && {
 			icon: ExitIcon,
@@ -129,7 +135,7 @@
 
 <!-- TODO: i18n -->
 {#if meeting}
-	<UserAvatarsList users={meetUsersOmitCurrent} />
+	<UserAvatarsList users={meetUsers} />
 	<FieldSection
 		value={meeting.name || meetUsersOmitCurrent.map((user) => user.meta.userName).join(' ')}
 		description="Имя"

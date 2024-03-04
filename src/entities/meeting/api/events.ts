@@ -1,4 +1,5 @@
 import { map } from 'rxjs';
+import {} from 'rxjs';
 
 import { fromEventSource } from '@/shared/lib/rxjs';
 import { apiEventSource } from '@/shared/lib/events';

@@ -72,7 +72,7 @@
 			// Для странички регистрации всегда прячем кнопку "назад"
 			$page.url.pathname.includes('register') ||
 			// Если путь НЕ похож на <корневой путь>/<что угодно>, то не показываем кнопку "назад"
-			$page.url.pathname === (base.startsWith('/') ? base : `${base}/`)
+			$page.url.pathname === (base.endsWith('/') ? base : `${base}/`)
 		)
 			hideBackButton();
 		else showBackButton();

@@ -6,16 +6,26 @@
 	export let bold: boolean = false;
 	export let role: RoleType = 'main';
 
+	export let truncate: boolean = false;
 	export let align: string | undefined = undefined;
+
+	export let as: 'p' | 'span' = truncate ? 'p' : 'span';
 </script>
 
-<span class={cn(role, $$restProps.class)} style:text-align={align} class:bold>
+<svelte:element this={as} class={cn(role, $$restProps.class)} class:truncate style:text-align={align} class:bold>
 	<slot />
-</span>
+</svelte:element>
 
 <!-- TODO: styles (rem/em, sizes, heading) -->
 
 <style>
+	.truncate {
+		width: 100%;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
 	.bold {
 		font-weight: bolder;
 	}

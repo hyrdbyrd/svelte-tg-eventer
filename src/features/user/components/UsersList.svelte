@@ -7,7 +7,6 @@
 	import type { User as UserType } from '@/entities/user';
 
 	import User from './User.svelte';
-	import { page } from '$app/stores';
 
 	export let users: UserType[];
 
@@ -23,12 +22,7 @@
 <div bind:this={wrapper}>
 	<Section type="main">
 		<VirtualList items={users} let:item={user} height="{listHeight - 10}px">
-			<User
-				userId={user.meta.id}
-				name={user.meta.userName}
-				src={user.meta.photoLink || ''}
-				isCurrent={String(user.meta.id) === $page.url.searchParams.get('userId')}
-			/>
+			<User {user} />
 		</VirtualList>
 	</Section>
 </div>

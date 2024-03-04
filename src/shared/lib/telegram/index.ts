@@ -9,17 +9,23 @@ export function getTelegram(): typeof Telegram.WebApp {
 export function showBackButton() {
 	const tg = getTelegram();
 
-	afterUpdate(() => {
+	function handleShow() {
 		tg.BackButton.show();
 
 		const onBack = () => goToMain();
 		tg.BackButton.onClick(onBack);
 		return () => tg.BackButton.offClick(onBack);
-	});
+	}
+
+	afterUpdate(handleShow);
 }
 
 export function hideBackButton() {
 	const tg = getTelegram();
 
-	tg.BackButton.hide();
+	function handleHide() {
+		tg.BackButton.hide();
+	}
+
+	afterUpdate(handleHide);
 }

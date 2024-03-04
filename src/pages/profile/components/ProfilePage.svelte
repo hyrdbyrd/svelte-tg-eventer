@@ -54,5 +54,11 @@
 </Section>
 
 <Footer>
-	<Button disabled={isLoading || !userName} wide on:click={handleSave}>Сохранить</Button>
+	<Button
+		wide
+		on:click={handleSave}
+		disabled={isLoading || !userName || !description}
+	>
+		Сохранить
+	</Button>
 </Footer>

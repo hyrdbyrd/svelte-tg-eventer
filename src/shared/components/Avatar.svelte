@@ -1,8 +1,8 @@
-<script lang="ts" context="module">
-	const STATIC_SRC = 'https://avatars.mds.yandex.net/get-yapic/0/0-0/islands-34';
-</script>
-
 <script lang="ts">
+	import { onMount } from 'svelte';
+
+	import AvatarStubIcon from './AvatarStubIcon.svelte';
+
 	export let alt: string = 'Avatar';
 	export let src: string | undefined;
 
@@ -10,18 +10,40 @@
 
 	export let width: string = `${size}px`;
 	export let height: string = `${size}px`;
+
+	let loading = true;
+	let errored = false;
+
+	let mounted = false;
+	onMount(() => {
+		mounted = true;
+	})
 </script>
 
-<img
-	{alt}
-	style:width
-	style:height
-	src={src || STATIC_SRC}
-	class={$$restProps.class}
-	on:error={() => (src = STATIC_SRC)}
-/>
+{#if mounted}
+	{#if errored || !src}
+		<AvatarStubIcon width={size} height={size} />
+	{:else}
+		<img
+			{alt}
+			{src}
+			style:width
+			style:height
+			class:loading
+			on:error={() => errored = true}
+			on:load={(ev) => {
+				loading = false;
+				if ((ev.status || 0) >= 400) (errored = true)
+			}}
+		/>
+	{/if}
+{/if}
 
 <style>
+	.loading {
+		display: none;
+	}
+
 	img {
 		object-fit: cover;
 		border-radius: 100%;

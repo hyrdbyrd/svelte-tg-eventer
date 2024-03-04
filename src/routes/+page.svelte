@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
+	import { dotsTicker } from '@/shared/lib/actions';
 	import { goFromMain } from '@/shared/lib/navigate';
 	import Button from '@/shared/components/Button.svelte';
 
@@ -34,7 +35,16 @@
 <AvailableMeetingsList />
 
 <Footer>
-	<Button wide disabled={searchStarted} on:click={handleFastMeet}>Быстрая встреча</Button>
+	{#if searchStarted}
+		<Button wide disabled>
+			<span use:dotsTicker>Поиск встречи</span>
+		</Button>
+	{:else}
+		<Button wide on:click={handleFastMeet}>
+			Быстрая встреча
+		</Button>
+	{/if}
+
 	{#if $event.features.includes('IS_CUSTOM_MEETINGS_ALLOWED')}
 		<Button wide on:click={handleCustomMeet}>Создать встречу</Button>
 	{/if}

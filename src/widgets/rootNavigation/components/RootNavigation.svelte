@@ -10,8 +10,8 @@
 
 	import { users } from '@/features/user';
 	import { event } from '@/features/event';
-	import { endedMeetings } from '@/features/meeting';
 	import { raffle } from '@/features/raffle';
+	import { endedMeetings } from '@/features/meeting';
 
 	let features = $event.features;
 
@@ -33,7 +33,7 @@
 			icon: ClockIcon,
 			text: 'История',
 			onClick: goFromMain.bind(null, 'history'),
-			pin: $endedMeetings.filter((meeting) => !meeting.rate).length,
+			pin: $endedMeetings.filter((meeting) => !meeting.rate && meeting.rate !== -1 && meeting.status !== 'REJECTED').length,
 		},
 	]);
 </script>

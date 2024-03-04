@@ -10,7 +10,16 @@
 <label>
 	<Field class={$$restProps.class}>
 		<Text slot="name" bold role="accent">{name}</Text>
-		<input {...$$restProps} class="" slot="content" {placeholder} {name} type="text" bind:value />
+		<input
+			{...$$restProps}
+			{name}
+			class=""
+			bind:value
+			type="text"
+			on:keypress
+			{placeholder}
+			slot="content"
+		/>
 	</Field>
 </label>
 

@@ -34,6 +34,8 @@
 		border: none;
 		outline: none;
 
+		transition: all linear .2s;
+
 		color: var(--button-text-color);
 		background: var(--button-main-color);
 	}

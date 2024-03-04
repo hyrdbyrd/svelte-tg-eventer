@@ -3,12 +3,13 @@
 
 	import Button from '@/shared/components/Button.svelte';
 
+	import { SendMeetingRequestStatus } from '@/entities/meeting';
+
 	import { UserInfo } from '@/widgets/userInfo';
 
-	import { Footer } from '@/features/footer';
-
 	import { users } from '@/features/user';
-	import { sendMeetingRequestFx, isRequestAlredyExistFx } from '@/features/meeting';
+	import { Footer } from '@/features/footer';
+	import { sendMeetingRequestFx, canSendMeetingRequestFx } from '@/features/meeting';
 
 	let userId = $page.url.searchParams.get('userId')!;
 	let eventId = $page.url.searchParams.get('eventId')!;
@@ -18,16 +19,17 @@
 
 	$: hereUser = $users.find((user) => String(user.meta.id) === userForId)!;
 
-	let isRequestAlredyExist: Promise<boolean> | boolean = isRequestAlredyExistFx({
-		eventId,
-		userFromId: userId,
-		userToId: userForId,
-	});
+	let isRequestAlredyExist: Promise<SendMeetingRequestStatus> | SendMeetingRequestStatus =
+		canSendMeetingRequestFx({
+			eventId,
+			userFromId: userId,
+			userToId: userForId,
+		});
 
 	function requestMeeting() {
 		isLoading = true;
 		sendMeetingRequestFx({ eventId, userFromId: userId, userToId: userForId })
-			.then(() => (isRequestAlredyExist = true))
+			.then(() => (isRequestAlredyExist = 'ALREADY_EXIST'))
 			.finally(() => (isLoading = true));
 	}
 </script>
@@ -37,10 +39,10 @@
 {#if hereUser}
 	<UserInfo user={hereUser} />
 
-	{#await isRequestAlredyExist then isExist}
+	{#await isRequestAlredyExist then status}
 		<Footer>
-			<Button wide disabled={isExist} on:click={requestMeeting}>
-				{isExist ? 'Запрос отправлен' : 'Запросить встречу'}
+			<Button wide disabled={status !== 'NOT_EXIST' || isLoading} on:click={requestMeeting}>
+				{status !== 'NOT_EXIST' ? 'Запрос отправлен' : 'Запросить встречу'}
 			</Button>
 		</Footer>
 	{/await}

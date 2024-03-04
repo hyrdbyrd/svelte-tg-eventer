@@ -1,7 +1,7 @@
 import { api } from '@/shared/lib/handlers';
 
 import type { MeetingMeta } from '../lib/types';
-import { MeetingStatus } from '../lib/constants';
+import { MeetingStatus, SendMeetingRequestStatus } from '../lib/constants';
 
 import type { ApiMeeting } from './types';
 import { mapApiMeetingToClient, mapClientMeetingTo } from './helpers';
@@ -96,12 +96,20 @@ export function leftMeeting(eventId: string, userId: string, meetingId: string) 
 			eventId,
 			meetingId,
 		})
-		.then((resp) => resp.data);
+		.then(() => ({ meetingId }));
 }
 
 export function isRequestAlredyExist(eventId: string, userFromId: string, userToId: string) {
 	return api
 		.get<boolean>(`/meeting/is_request_already_exist/${eventId}/${userFromId}/${userToId}`)
+		.then((resp) => resp.data);
+}
+
+export function canSendMeetingRequest(eventId: string, userFromId: string, userToId: string) {
+	return api
+		.get<SendMeetingRequestStatus>(
+			`/meeting/can_send_meeting_request/${eventId}/${userFromId}/${userToId}`,
+		)
 		.then((resp) => resp.data);
 }
 

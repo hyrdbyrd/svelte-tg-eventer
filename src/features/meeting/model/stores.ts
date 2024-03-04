@@ -39,7 +39,7 @@ export const myMeetings = createStore<Meeting[]>([], { name: 'myMeetings' })
 	.on(joinMeetingFx.doneData, (state, meet) => addMeeting(state, meet))
 	// Уходим со встреч / встречи заканчиваются
 	.on(meetingEnd, (state, meet) => eraseMeet(state, meet.id!))
-	.on(leftMeetingFx.doneData, (state, { meetingId }) => eraseMeet(state, meetingId))
+	.on(leftMeetingFx.doneData, (state, { meetingId }) => eraseMeet(state, Number(meetingId)))
 	// Организатор автоматом попадет на встречу
 	.on(createCustomMeetingFx.doneData, (state, meet) => addMeeting(state, meet))
 	// Работа с митингом с типом REQUEST

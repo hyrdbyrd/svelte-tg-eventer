@@ -26,22 +26,25 @@ export async function load({ url }) {
 			break;
 
 		case 'rating':
-			nextUrl.pathname = base + '/history';
+			if (searchParams.meetingId) nextUrl.pathname = base + '/meeting';
+			else nextUrl.pathname = base + '/history';
 			break;
 
+		case 'request':
 		case 'fastmeeting':
 			if (!searchParams.meetingId) break;
 			nextUrl.pathname = base + '/meeting';
 			break;
 
-		case 'raffle':
+		case 'giveaway':
 			nextUrl.pathname = base + '/raffle';
 			break;
 
-		case 'request':
 		default:
 			return;
 	}
+
+	nextUrl.searchParams.delete('type');
 
 	return redirect(300, nextUrl);
 }
