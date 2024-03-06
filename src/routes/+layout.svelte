@@ -64,7 +64,11 @@
 		// Слушаем завершение розыгрыша
 		raffleEnd.watch(() => goFromMain('raffle'));
 		// Слушаем событие "Собеседник найден"
-		triggerMyMeeting.watch((data) => goFromMain('meeting', { meetingId: data.id! }));
+		triggerMyMeeting.watch((data) => {
+			// Не ждем. Пускай отрабатывает в фоне
+			isFastMeetingAlredyExistFx({ eventId, userId });
+			goFromMain('meeting', { meetingId: data.id! });
+		});
 	});
 
 	if (dev) attachLogger();
