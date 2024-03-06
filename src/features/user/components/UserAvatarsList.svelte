@@ -4,8 +4,6 @@
 	import type { User } from '@/entities/user';
 
 	import UserAvatar from './UserAvatar.svelte';
-	import User from './User.svelte';
-
 
 	export let users: User[] = [];
 
