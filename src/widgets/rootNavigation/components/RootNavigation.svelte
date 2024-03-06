@@ -16,7 +16,7 @@
 	let features = $event.features;
 
 	// TODO: i18n
-	let menu: MenuItemType[] = compact([
+	$: menu = compact<MenuItemType>([
 		{ icon: ProfileIcon, text: 'Анкета', onClick: goFromMain.bind(null, 'profile') },
 		$users.length && {
 			icon: UsersIcon,
