@@ -15,7 +15,7 @@
 	import { getAllUsersFx } from '@/features/user';
 	import {
 		getUserMeetingsFx,
-		fastMeetingUserFound,
+		triggerMyMeeting,
 		getEndedUserMeetingsFx,
 		getAvailableCustomMeetingsFx,
 	} from '@/features/meeting';
@@ -62,7 +62,7 @@
 		// Слушаем завершение розыгрыша
 		raffleEnd.watch(() => goFromMain('raffle'));
 		// Слушаем событие "Собеседник найден"
-		fastMeetingUserFound.watch((data) => goFromMain('meeting', { meetingId: data.id! }));
+		triggerMyMeeting.watch((data) => goFromMain('meeting', { meetingId: data.id! }));
 	});
 
 	if (dev) attachLogger();

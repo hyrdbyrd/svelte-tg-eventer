@@ -15,7 +15,7 @@ const config = {
 			'@': resolve('./src'),
 		},
 		paths: {
-			base: process.env.NODE_ENV === 'production' ? '/svelte-tg-eventer' : '',
+			base: process.env.NODE_ENV === 'production' ? process.env.FRONT_BASE : '',
 		},
 	},
 };

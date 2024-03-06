@@ -6,14 +6,14 @@ import {
 	type ApiMeeting,
 	meetingUpdated$,
 	meetingBecomeEnd$,
+	triggerMyMeeting$,
 	newAvailableMeeting$,
-	fastMeetingUserFound$,
 	someMeetingBecomeUnAvailable$,
 } from '@/entities/meeting';
 
 export const meetingEnd = fromObservable<Meeting>(meetingEnd$);
 export const meetingUpdated = fromObservable<ApiMeeting>(meetingUpdated$);
 export const meetingBecomeEnd = fromObservable<Meeting>(meetingBecomeEnd$);
+export const triggerMyMeeting = fromObservable<Meeting>(triggerMyMeeting$);
 export const newAvailableMeeting = fromObservable<Meeting>(newAvailableMeeting$);
-export const fastMeetingUserFound = fromObservable<Meeting>(fastMeetingUserFound$);
 export const someMeetingBecomeUnAvailable = fromObservable<Meeting>(someMeetingBecomeUnAvailable$);

@@ -7,8 +7,6 @@ export async function load({ url }) {
 		{},
 	);
 
-	console.log('called');
-
 	if (!searchParams.eventId || !searchParams.userId) redirect(308, '404');
 
 	const { getUser } = await import('@/entities/user');

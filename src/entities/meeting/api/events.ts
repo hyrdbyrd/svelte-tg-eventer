@@ -26,9 +26,8 @@ export const meetingBecomeEnd$ = fromEventSource<ApiMeeting>(
 	'METTING_BECOME_END',
 ).pipe(map((meet) => mapApiMeetingToClient(meet, 'ENDED')));
 
-export const fastMeetingUserFound$ = fromEventSource<ApiMeeting>(
-	apiEventSource,
-	'FAST_MEETING_USER_FOUND',
-).pipe(map((meet) => mapApiMeetingToClient(meet, 'MY')));
+export const triggerMyMeeting$ = fromEventSource<ApiMeeting>(apiEventSource, 'TRIGGER_MY_MEETING').pipe(
+	map((meet) => mapApiMeetingToClient(meet, 'MY')),
+);
 
 export const meetingUpdated$ = fromEventSource<ApiMeeting>(apiEventSource, 'MEETING_UPDATED');

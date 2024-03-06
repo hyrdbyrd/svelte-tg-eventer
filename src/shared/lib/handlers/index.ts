@@ -2,4 +2,4 @@ import axios from 'axios';
 
 import { PUBLIC_API } from '$env/static/public';
 
-export const api = axios.create({ baseURL: PUBLIC_API });
+export const api = axios.create({ baseURL: PUBLIC_API, timeout: 30000 });

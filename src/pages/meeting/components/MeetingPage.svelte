@@ -64,7 +64,7 @@
 	$: canFinishMeeting = (isOneByOne || isCurrentUserOrganizator) && isMy && !isWaitingResponse && !isEnded;
 
 	$: isOneByOne = isRequest || isFast;
-	$: isRateAvailable = isEnded && (!isRejected || rate !== -1);
+	$: isRateAvailable = isEnded && !isRejected && rate !== -1;
 
 	$: menuItmes = compact([
 		!isOneByOne && {
@@ -74,19 +74,30 @@
 		},
 		canFinishMeeting && {
 			icon: AcceptIcon,
+			disabled: isLoading,
 			text: 'Встреча закончилась',
-			onClick: () => markMeetingFinishedFx({ eventId, userId, meetingId }).then(() => goToMain()),
+			onClick: () => {
+				isLoading = true;
+				markMeetingFinishedFx({ eventId, userId, meetingId }).then(() => goToMain());
+			},
 		},
 		canFinishMeeting && {
 			icon: RejectIcon,
+			disabled: isLoading,
 			text: 'Встреча не состоялась',
-			onClick: () => meetingNotHappendFx({ eventId, userId, meetingId }).then(() => goToMain()),
+			onClick: () => {
+				isLoading = true;
+				meetingNotHappendFx({ eventId, userId, meetingId }).then(() => goToMain());
+			},
 		},
 		!isOneByOne && !isEnded && !isCurrentUserOrganizator && isMy && {
 			icon: ExitIcon,
+			disabled: isLoading,
 			text: 'Покинуть встречу',
-			onClick: () =>
-				leftMeetingFx({ eventId, userId, meetingId }).then(() => goToMain({ meetingId })),
+			onClick: () => {
+				isLoading = true;
+				leftMeetingFx({ eventId, userId, meetingId }).then(() => goToMain({ meetingId }));
+			},
 		},
 	]);
 
@@ -111,7 +122,6 @@
 	function joinMeeting() {
 		isLoading = true;
 		joinMeetingFx({ eventId, userId, meetingId })
-			.then(() => goToMain())
 			.finally(() => (isLoading = false));
 	}
 
