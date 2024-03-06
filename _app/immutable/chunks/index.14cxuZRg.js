@@ -1,0 +1,1 @@
+import{b as n,g as s,r as i}from"./entry.DAWFn0C_.js";function c(a="",e={}){const t=new URL(location.href);t.pathname=n+(a.startsWith("/")?a:`/${a}`);for(const[o,r]of Object.entries(e))t.searchParams.set(o,String(r));return s(t)}function g(a={},e=!1){if(e){const t=new URL(location.href);t.pathname=n,i(t,{})}return c("",a)}export{c as a,g};

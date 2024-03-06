@@ -1,1 +1,1 @@
-export const env={"PUBLIC_API":"https://backend.hibye.pro:8443"}
+export const env={"PUBLIC_API":"https://test.hibye.pro:8443"}
