@@ -4,6 +4,7 @@
 	import type { User } from '@/entities/user';
 
 	import UserAvatar from './UserAvatar.svelte';
+	import User from './User.svelte';
 
 
 	export let users: User[] = [];
@@ -13,7 +14,7 @@
 
 {#if users.length}
 	<user-avatars>
-		{#each users.slice(0, 3) as user, idx}
+		{#each users.slice(0, 3) as user, idx (user.meta.id)}
 			<user-avatar-border style:z-index={idx + 1}>
 				<UserAvatar {user} size={110} />
 			</user-avatar-border>
