@@ -4,14 +4,12 @@
 
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 
-	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { dev } from '$app/environment';
 
 	import { goFromMain } from '@/shared/lib/navigate';
-	import { getTelegram } from '@/shared/lib/telegram';
 	import Loader from '@/shared/components/Loader.svelte';
-	import { showBackButton, hideBackButton } from '@/shared/lib/telegram';
+	import { getTelegram, BackButton } from '@/shared/lib/telegram';
 
 	import { getEventFx } from '@/features/event';
 	import { getAllUsersFx } from '@/features/user';
@@ -67,19 +65,10 @@
 		fastMeetingUserFound.watch((data) => goFromMain('meeting', { meetingId: data.id! }));
 	});
 
-	$: {
-		if (
-			// Для странички регистрации всегда прячем кнопку "назад"
-			$page.url.pathname.includes('register') ||
-			// Если путь НЕ похож на <корневой путь>/<что угодно>, то не показываем кнопку "назад"
-			$page.url.pathname === (base.endsWith('/') ? base : `${base}/`)
-		)
-			hideBackButton();
-		else showBackButton();
-	}
-
 	if (dev) attachLogger();
 </script>
+
+<BackButton />
 
 {#await Promise.all(waitFor)}
 	<svelte-loader>

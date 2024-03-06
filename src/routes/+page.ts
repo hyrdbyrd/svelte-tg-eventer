@@ -1,15 +1,13 @@
 import { base } from '$app/paths';
 import { redirect } from '@sveltejs/kit';
 
-import { browser } from '$app/environment';
-
 export async function load({ url }) {
-	if (!browser) return;
-
 	const searchParams = [...url.searchParams.entries()].reduce<Record<string, string>>(
 		(acc, [key, value]) => ((acc[key] = value), acc),
 		{},
 	);
+
+	console.log('called');
 
 	if (!searchParams.eventId || !searchParams.userId) redirect(308, '404');
 
