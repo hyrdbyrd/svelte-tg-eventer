@@ -20,7 +20,9 @@
 		{ icon: ProfileIcon, text: 'Анкета', onClick: goFromMain.bind(null, 'profile') },
 		$users.length && {
 			icon: UsersIcon,
-			text: 'Участники',
+			text: features.includes('IS_CUSTOM_MEETINGS_ALLOWED')
+				? 'Участники'
+				: 'Отправить запрос',
 			onClick: goFromMain.bind(null, 'users'),
 		},
 		features.includes('IS_RUFFLE_ALLOWED') && {
