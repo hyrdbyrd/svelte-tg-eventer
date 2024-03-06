@@ -11,7 +11,6 @@ import {
 	createCustomMeeting,
 	answerMeetingRequest,
 	getEndedUserMeetings,
-	isRequestAlredyExist,
 	canSendMeetingRequest,
 	getAvailableCustomMeetings,
 } from '@/entities/meeting';
@@ -46,10 +45,6 @@ export const leftMeetingFx = createEffect(({ eventId, userId, meetingId }: MeetP
 export const getAvailableCustomMeetingsFx = createEffect(({ userId, eventId }: Param) =>
 	getAvailableCustomMeetings(eventId, userId),
 );
-export const isRequestAlredyExistFx = createEffect(
-	({ eventId, userFromId, userToId }: MeetReqParam) =>
-		isRequestAlredyExist(eventId, userFromId, userToId),
-);
 export const canSendMeetingRequestFx = createEffect(
 	({ eventId, userFromId, userToId }: MeetReqParam) =>
 		canSendMeetingRequest(eventId, userFromId, userToId),
@@ -66,5 +61,4 @@ export const rejectMeetingRequestFx = createEffect(
 	({ eventId, userFromId, userToId }: MeetReqParam) =>
 		answerMeetingRequest(eventId, userFromId, userToId, false),
 );
-
 export const createCustomMeetingFx = createEffect(createCustomMeeting);

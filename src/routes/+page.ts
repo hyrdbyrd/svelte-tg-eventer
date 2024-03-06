@@ -1,5 +1,6 @@
-import { base } from '$app/paths';
 import { redirect } from '@sveltejs/kit';
+
+import { base } from '$app/paths';
 
 export async function load({ url }) {
 	const searchParams = [...url.searchParams.entries()].reduce<Record<string, string>>(
@@ -42,5 +43,5 @@ export async function load({ url }) {
 
 	nextUrl.searchParams.delete('type');
 
-	return redirect(300, nextUrl);
+	return redirect(301, nextUrl);
 }

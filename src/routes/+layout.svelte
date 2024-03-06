@@ -12,7 +12,7 @@
 	import { getTelegram, BackButton } from '@/shared/lib/telegram';
 
 	import { getEventFx } from '@/features/event';
-	import { getAllUsersFx } from '@/features/user';
+	import { getAllUsersFx, isFastMeetingAlredyExistFx } from '@/features/user';
 	import {
 		getUserMeetingsFx,
 		triggerMyMeeting,
@@ -50,6 +50,8 @@
 
 			return null;
 		}),
+		// Проверяем начинал ли пользователь искать быструю встречу
+		isFastMeetingAlredyExistFx({ eventId, userId }),
 		// Подгружаем всех пользователей
 		getAllUsersFx(eventId),
 		// Подгружаем встречи

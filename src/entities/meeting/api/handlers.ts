@@ -99,12 +99,6 @@ export function leftMeeting(eventId: string, userId: string, meetingId: string) 
 		.then(() => ({ meetingId }));
 }
 
-export function isRequestAlredyExist(eventId: string, userFromId: string, userToId: string) {
-	return api
-		.get<boolean>(`/meeting/is_request_already_exist/${eventId}/${userFromId}/${userToId}`)
-		.then((resp) => resp.data);
-}
-
 export function canSendMeetingRequest(eventId: string, userFromId: string, userToId: string) {
 	return api
 		.get<SendMeetingRequestStatus>(

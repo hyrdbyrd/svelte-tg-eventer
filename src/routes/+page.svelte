@@ -5,22 +5,22 @@
 	import { goFromMain } from '@/shared/lib/navigate';
 	import Button from '@/shared/components/Button.svelte';
 
-	import { starSearchFastMeeting } from '@/entities/user';
-
 	import { event } from '@/features/event';
 	import Footer from '@/features/footer/components/Footer.svelte';
+	import { starSearchFastMeetingFx, isUserFastMeetingStarted, cancelFastMeetingFx } from '@/features/user';
 
 	import { RootNavigation } from '@/widgets/rootNavigation';
 	import { AvailableMeetingsList, MyMeetingsList } from '@/widgets/meetingsList';
 
-	let searchStarted = false;
+	let userId = $page.url.searchParams.get('userId')!;
+	let eventId = $page.url.searchParams.get('eventId')!;
 
 	function handleFastMeet() {
-		searchStarted = true;
-		starSearchFastMeeting(
-			$page.url.searchParams.get('eventId')!,
-			$page.url.searchParams.get('userId')!,
-		);
+		starSearchFastMeetingFx({ eventId, userId });
+	}
+
+	function handleCancelFastMeet() {
+		cancelFastMeetingFx({ eventId, userId });
 	}
 
 	function handleCustomMeet() {
@@ -34,9 +34,11 @@
 
 <AvailableMeetingsList />
 
+<!-- TODO: i18n -->
+
 <Footer>
-	{#if searchStarted}
-		<Button wide disabled>
+	{#if $isUserFastMeetingStarted}
+		<Button wide color="gray" on:click={handleCancelFastMeet}>
 			<span use:dotsTicker>Поиск встречи</span>
 		</Button>
 	{:else}

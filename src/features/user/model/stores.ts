@@ -2,9 +2,14 @@ import { createStore } from 'effector';
 
 import type { User } from '@/entities/user';
 
-import { getAllUsersFx, updateUserFx } from './effects';
+import {
+	updateUserFx,
+	getAllUsersFx,
+	cancelFastMeetingFx,
+	starSearchFastMeetingFx,
+	isFastMeetingAlredyExistFx,
+} from './effects';
 import { updateUsers, userRegistered } from './events';
-
 import { findUserIndexByApiUser, filterExistingUsers } from './helpers';
 
 function updateUser(state: User[], user: User) {
@@ -22,3 +27,8 @@ export const users = createStore<User[]>([], { name: 'users' })
 	.on(userRegistered, (state, user) => [...state, user])
 	.on(updateUserFx.doneData, updateUser)
 	.on(updateUsers, updateUser);
+
+export const isUserFastMeetingStarted = createStore<boolean>(false)
+	.on(cancelFastMeetingFx.doneData, () => false)
+	.on(starSearchFastMeetingFx.doneData, () => true)
+	.on(isFastMeetingAlredyExistFx.doneData, (_, value) => value);

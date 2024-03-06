@@ -34,3 +34,13 @@ export function starSearchFastMeeting(eventId: string, userId: string) {
 		eventId: Number(eventId),
 	});
 }
+
+export function isFastMeetingAlredyExist(eventId: string, userId: string) {
+	return api
+		.get<boolean>(`/meeting/is_fast_meeting_exist/${eventId}/${userId}`)
+		.then((resp) => resp.data);
+}
+
+export function cancelFastMeeting(eventId: string, userId: string) {
+	return api.get<unknown>(`/meeting/cancel_fast_meeting/${eventId}/${userId}`);
+}
