@@ -2,7 +2,7 @@
 	export let wide = false;
 
 	export let disabled: boolean = false;
-	export let color: 'theme' | 'red' | 'green' = 'theme';
+	export let color: 'theme' | 'red' | 'green' | 'gray' = 'theme';
 </script>
 
 <button {disabled} class={color} class:wide on:click on:pointerdown on:pointerup {...$$restProps}>

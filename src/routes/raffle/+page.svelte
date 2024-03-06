@@ -3,13 +3,14 @@
 
     import { page } from '$app/stores';
 
+    import { Footer } from '@/features/footer';
+    import { raffle, userRegisteredToRaffleFx, userSeenRaffleFx } from '@/features/raffle';
+
+    import { goToMain } from '@/shared/lib/navigate';
+	import Text from '@/shared/components/Text.svelte';
+	import Stack from '@/shared/components/Stack.svelte';
     import Button from '@/shared/components/Button.svelte';
     import EmojiIcon, { type EmojiType } from '@/shared/components/EmojiIcon.svelte';
-
-    import { raffle, userRegisteredToRaffleFx, userSeenRaffleFx } from '@/features/raffle';
-    import { Footer } from '@/features/footer';
-	import Stack from '@/shared/components/Stack.svelte';
-	import Text from '@/shared/components/Text.svelte';
 
     let userId = $page.url.searchParams.get('userId')!;
 	let eventId = $page.url.searchParams.get('eventId')!;
@@ -48,6 +49,10 @@
             .finally(() => isLoading = false);
     }
 
+    function handleToMain() {
+        goToMain();
+    }
+
     afterUpdate(() => {
         if ($raffle.isUserSeen) return;
         userSeenRaffleFx({ eventId, userId });
@@ -68,11 +73,17 @@
 
 <Footer>
     {#if status === 'NOT_REGISTERED'}
-        <Button wide disabled={isLoading} on:click={handleRegistraion}>Участвовать в розыгрыше</Button>
+        <Button wide disabled={isLoading} on:click={handleRegistraion}>
+            Участвовать в розыгрыше
+        </Button>
     {:else if status === 'REGISTERED'}
-        <Button wide color="green">Вы участвуете в розыгрыше</Button>
+        <Button wide color="green" on:click={handleToMain}>
+            Вы участвуете в розыгрыше
+        </Button>
     {:else}
-        <Button wide disabled>Розыгрыш закончился</Button>
+        <Button wide color="gray" on:click={handleToMain}>
+            Розыгрыш закончился
+        </Button>
     {/if}
 </Footer>
 

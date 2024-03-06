@@ -41,7 +41,9 @@
 		</Button>
 	{:else}
 		<Button wide on:click={handleFastMeet}>
-			Быстрая встреча
+			{$event.features.includes('IS_CUSTOM_MEETINGS_ALLOWED')
+				? 'Быстрая встреча'
+				: 'Найти случайного собеседника'}
 		</Button>
 	{/if}
 
