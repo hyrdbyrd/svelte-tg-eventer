@@ -15,7 +15,7 @@ const config = {
 			'@': resolve('./src'),
 		},
 		paths: {
-			base: process.env.NODE_ENV === 'production' ? process.env.FRONT_BASE : '',
+			base: process.env.NODE_ENV === 'production' ? process.env.FRONT_BASE || '' : '',
 		},
 	},
 };
