@@ -26,8 +26,6 @@
 	function handleCustomMeet() {
 		goFromMain('custom-meet');
 	}
-
-	$: console.log('CHANGED1', $isUserFastMeetingStarted);
 </script>
 
 <RootNavigation />
