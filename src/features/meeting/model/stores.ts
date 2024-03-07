@@ -43,14 +43,14 @@ export const myMeetings = createStore<Meeting[]>([], { name: 'myMeetings' })
 	// Организатор автоматом попадет на встречу
 	.on(createCustomMeetingFx.doneData, (state, meet) => addMeeting(state, meet))
 	// Работа с митингом с типом REQUEST
-	.on(sendMeetingRequestFx.doneData, (state, meet) => [...state, meet])
+	.on(sendMeetingRequestFx.doneData, (state, meet) => addMeeting(state, meet))
 	.on(acceptMeetingRequestFx.doneData, (state, meet) =>
 		updateMeeting(state, { ...meet, meetingStatus: 'ACCEPTED' }, 'MY'),
 	)
 	.on(rejectMeetingRequestFx.doneData, (state, meet) => eraseMeet(state, meet.meetingId!));
 
 export const endedMeetings = createStore<Meeting[]>([], { name: 'endedMeetings' })
-	.on(meetingBecomeEnd, (state, meet) => [...state, meet])
+	.on(meetingBecomeEnd, (state, meet) => addMeeting(state, meet))
 	.on(getEndedUserMeetingsFx.doneData, (_, state) => state)
 	.on(meetingUpdated, (state, meet) => updateMeeting(state, meet, 'ENDED'))
 	.on(rejectMeetingRequestFx.doneData, (state, meet) =>

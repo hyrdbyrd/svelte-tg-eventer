@@ -22,9 +22,19 @@ function updateUser(state: User[], user: User) {
 	return state;
 }
 
+function addUser(state: User[], user: User) {
+	const idx = findUserIndexByApiUser(state, user);
+	if (idx !== -1) {
+		state[idx] = user;
+		return [...state];
+	}
+
+	return [...state, user];
+}
+
 export const users = createStore<User[]>([], { name: 'users' })
 	.on(getAllUsersFx.doneData, (state, users) => state.concat(filterExistingUsers(state, users)))
-	.on(userRegistered, (state, user) => [...state, user])
+	.on(userRegistered, addUser)
 	.on(updateUserFx.doneData, updateUser)
 	.on(updateUsers, updateUser);
 
