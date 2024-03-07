@@ -40,5 +40,5 @@ export const users = createStore<User[]>([], { name: 'users' })
 
 export const isUserFastMeetingStarted = createStore<boolean>(false)
 	.on(cancelFastMeetingFx.doneData, () => false)
-	.on(starSearchFastMeetingFx.doneData, () => true)
+	.on(starSearchFastMeetingFx.doneData, (_, value) => !value)
 	.on(isFastMeetingAlredyExistFx.doneData, (_, value) => value);

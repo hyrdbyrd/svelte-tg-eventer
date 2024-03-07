@@ -64,7 +64,7 @@
 		// Слушаем завершение розыгрыша
 		raffleEnd.watch(() => goFromMain('raffle'));
 		// Слушаем событие "Собеседник найден"
-		triggerMyMeeting.watch((data) => {
+		triggerMyMeeting.watch(async (data) => {
 			// Когда пришел triggerMyMeeting, это могла быть быстрая встреча, поэтому нужно перезапросить
 			// Не ждем. Пускай отрабатывает в фоне
 			isFastMeetingAlredyExistFx({ eventId, userId });

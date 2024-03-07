@@ -29,10 +29,12 @@ export function getUser(eventId: string, userId: string) {
 }
 
 export function starSearchFastMeeting(eventId: string, userId: string) {
-	return api.post<ApiUser>(`/meeting/get_user_for_fast_meeting`, {
-		userId: Number(userId),
-		eventId: Number(eventId),
-	});
+	return api
+		.post<ApiUser | null | undefined>(`/meeting/get_user_for_fast_meeting`, {
+			userId: Number(userId),
+			eventId: Number(eventId),
+		})
+		.then((resp) => Boolean(resp.data));
 }
 
 export function isFastMeetingAlredyExist(eventId: string, userId: string) {
